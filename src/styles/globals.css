@@ -1,0 +1,39 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  color: var(--black);
+  font-family: var(--fu);
+  line-height: 1.6;
+  background: var(--off-white);
+  overflow-x: hidden;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+main {
+  min-height: 70vh;
+}
+
+::selection {
+  color: #fff;
+  background: var(--signal);
+}

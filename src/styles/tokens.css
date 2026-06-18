@@ -1,0 +1,20 @@
+:root {
+  --black: #1a1a1f;
+  --graphite: #2e2e36;
+  --signal: #e8472e;
+  --signal-light: #ff6b4e;
+  --off-white: #f5f4f2;
+  --white: #ffffff;
+  --n300: #e8e8ec;
+  --n400: #c8c8d0;
+  --n500: #8b8b9a;
+  --success: #22c55e;
+  --warning: #e6a93a;
+  --info: #6394ff;
+  --fh: "Sora", sans-serif;
+  --fu: "Inter", sans-serif;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+}
