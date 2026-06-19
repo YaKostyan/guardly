@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import "./styles/tokens.css";
 import "./styles/globals.css";
 import "./styles/components.css";
+import "./styles/game.css";
 
 createRoot(document.getElementById("root")).render(
   <React.StrictMode>

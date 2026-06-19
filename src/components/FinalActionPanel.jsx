@@ -1,45 +1,41 @@
-export default function FinalActionPanel({
-  actions,
-  locked,
-  selectedId,
-  onSelect,
-  onFinish,
-  lockReason,
-}) {
+import { Ban, ExternalLink, Forward, KeyRound, MessageSquareWarning, ShieldAlert } from "lucide-react";
+
+const actionIcons = {
+  "open-link": ExternalLink,
+  "login-only": KeyRound,
+  "block-report": Ban,
+  "send-friend": Forward,
+};
+
+export default function FinalActionPanel({ mission, actions, onChoose }) {
   return (
-    <section className={`final-action-panel ${locked ? "locked" : ""}`}>
-      <div className="panel-head">
-        <div>
-          <p className="section-eyebrow">Фінальне рішення</p>
-          <h3>Що робиш після перевірки?</h3>
+    <section className="decision-scene">
+      <div className="decision-stage-copy">
+        <span>03 · Фінальне рішення</span>
+        <h1>Ти викрив підробку.<br />Що робитимеш тепер?</h1>
+        <p>Останній крок впливає на безпеку акаунта. Обери одну дію.</p>
+      </div>
+      <div className="suspect-profile-card">
+        <div className="profile-cover"><ShieldAlert size={30} /></div>
+        <div className="profile-avatar-large">RD<i /></div>
+        <div className="profile-details">
+          <span>ПІДОЗРІЛИЙ ПРОФІЛЬ</span>
+          <h2>{mission.sender.nickname}</h2>
+          <p>Учасник сервера від сьогодні · Спільних друзів немає</p>
+          <div><strong>Gift helper</strong><span>Неофіційна роль</span></div>
         </div>
       </div>
-
-      {locked ? <p className="locked-note">{lockReason}</p> : null}
-
-      <div className="final-action-grid">
-        {actions.map((action) => (
-          <button
-            type="button"
-            className={selectedId === action.id ? "selected" : ""}
-            key={action.id}
-            onClick={() => onSelect(action)}
-            disabled={locked}
-          >
-            <span>{action.letter}</span>
-            <strong>{action.label}</strong>
-          </button>
-        ))}
+      <div className="decision-actions-v2">
+        {actions.map((action) => {
+          const Icon = actionIcons[action.id] || MessageSquareWarning;
+          return (
+            <button type="button" key={action.id} onClick={() => onChoose(action)}>
+              <span><Icon size={21} /></span>
+              <div><b>{action.letter}</b><strong>{action.label}</strong></div>
+            </button>
+          );
+        })}
       </div>
-
-      <button
-        className="mp-primary finish-action"
-        type="button"
-        onClick={onFinish}
-        disabled={locked || !selectedId}
-      >
-        Завершити місію
-      </button>
     </section>
   );
 }

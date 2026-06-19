@@ -1,122 +1,54 @@
-import { AlertTriangle, CheckCircle2, RotateCcw, Sparkles, Trophy } from "lucide-react";
+import { AlertTriangle, ArrowRight, Check, RotateCcw, ShieldCheck, Sparkles, Trophy } from "lucide-react";
 import BadgeUnlock from "./BadgeUnlock.jsx";
 
-export default function ResultScreen({
-  mission,
-  result,
-  foundEvidence,
-  missedEvidence,
-  onRetry,
-}) {
+export default function ResultScreen({ mission, result, foundEvidence, missedEvidence, onRetry }) {
   const success = result.outcome !== "bad";
-  const Icon = success ? CheckCircle2 : AlertTriangle;
-  const title =
-    result.outcome === "excellent"
-      ? mission.result.excellentTitle
-      : result.outcome === "medium"
-        ? mission.result.mediumTitle
-        : mission.result.badTitle;
-  const copy =
-    result.outcome === "excellent"
-      ? mission.result.excellentExplanation
-      : result.outcome === "medium"
-        ? mission.result.mediumExplanation
-        : mission.result.wrongExplanation;
+  const title = result.outcome === "excellent" ? mission.result.excellentTitle : result.outcome === "medium" ? mission.result.mediumTitle : mission.result.badTitle;
+  const copy = result.outcome === "excellent" ? mission.result.excellentExplanation : result.outcome === "medium" ? mission.result.mediumExplanation : mission.result.wrongExplanation;
 
   return (
-    <section className={`result-screen ${success ? "success" : "warning"}`}>
-      <div className="game-result-hero">
-        <div className="result-icon">
-          <Icon size={32} aria-hidden="true" />
-        </div>
-        <div>
-          <p className="section-eyebrow">Ранг {result.rank.id}</p>
-          <h2>{title}</h2>
-          <p>{copy}</p>
-        </div>
+    <section className={`result-screen-v2 ${success ? "success" : "danger"}`}>
+      <div className="result-celebration">
+        <div className="rank-orbit"><span>{result.rank.id}</span><i /><i /><i /></div>
+        <p>{success ? "Місію завершено" : "Місію провалено"}</p>
+        <h1>{title}</h1>
+        <p className="result-explanation">{copy}</p>
+        <div className="result-xp"><Trophy size={20} /><strong>{result.score} XP</strong><span>{result.rank.title}</span></div>
       </div>
 
-      <div className="result-grid">
-        <div className="xp-result-card">
-          <Trophy size={30} aria-hidden="true" />
-          <span>Підсумковий XP</span>
-          <strong className="xp-reveal">{result.score}</strong>
-          <p>{result.rank.title}</p>
+      <div className="result-dashboard">
+        <div className="result-skill-card">
+          <div><Sparkles size={20} /></div><span>Нова навичка</span><strong>{mission.badge.skill}</strong>
         </div>
-
         <BadgeUnlock badge={mission.badge} unlocked={success && result.rank.id !== "C"} />
-
-        <div className="skill-card">
-          <Sparkles size={22} aria-hidden="true" />
-          <span>Навичка</span>
-          <strong>{mission.badge.skill}</strong>
-          <p>Перевіряй відправника, домен, запит на вхід і тиск часу до будь-якої дії.</p>
+        <div className="result-score-card">
+          <span>Підсумок місії</span>
+          <div><b>Докази</b><strong>+{result.evidenceXp}</strong></div>
+          <div><b>Перевірка сайту</b><strong>+{result.domainXp}</strong></div>
+          <div><b>Фінальне рішення</b><strong>+{result.finalXp}</strong></div>
+          <div><b>Помилки</b><strong>{result.penaltyXp}</strong></div>
         </div>
       </div>
 
-      <div className="score-breakdown">
+      <div className="result-learning">
         <div>
-          <span>Докази</span>
-          <strong>+{result.evidenceXp}</strong>
+          <span>Що ти розпізнав</span>
+          <ul>{foundEvidence.map((item) => <li key={item.id}><Check size={14} />{item.title}</li>)}</ul>
         </div>
         <div>
-          <span>Домен</span>
-          <strong>{result.domainXp ? `+${result.domainXp}` : "0"}</strong>
-        </div>
-        <div>
-          <span>Рішення</span>
-          <strong>{result.finalXp ? `+${result.finalXp}` : "0"}</strong>
-        </div>
-        <div>
-          <span>Помилки</span>
-          <strong>{result.penaltyXp}</strong>
-        </div>
-        <div>
-          <span>Бонус фокуса</span>
-          <strong>{result.bonusXp ? `+${result.bonusXp}` : "0"}</strong>
+          <span>{missedEvidence.length ? "Що варто помічати наступного разу" : "Ідеальне розслідування"}</span>
+          <ul>{missedEvidence.length ? missedEvidence.map((item) => <li key={item.id}><AlertTriangle size={14} />{item.title}</li>) : <li><ShieldCheck size={14} />Ти знайшов усі сигнали у чаті.</li>}</ul>
         </div>
       </div>
 
-      <div className="result-review-grid">
-        <div className="review-card">
-          <p className="section-eyebrow">Знайдені докази</p>
-          <ul>
-            {foundEvidence.length ? (
-              foundEvidence.map((signal) => <li key={signal.id}>{signal.title}</li>)
-            ) : (
-              <li>Докази не зібрано.</li>
-            )}
-          </ul>
-        </div>
-        <div className="review-card">
-          <p className="section-eyebrow">{mission.result.missedTitle}</p>
-          <ul>
-            {missedEvidence.length ? (
-              missedEvidence.map((signal) => <li key={signal.id}>{signal.title}</li>)
-            ) : (
-              <li>Ти знайшов усі ключові сигнали у чаті.</li>
-            )}
-          </ul>
-        </div>
+      <div className="parent-checklist-v2">
+        <span>Після гри · Чеклист для батьків</span>
+        <div>{mission.checklist.map((item, index) => <p key={item}><i>{index + 1}</i>{item}</p>)}</div>
       </div>
 
-      <div className="parent-checklist">
-        <p className="section-eyebrow">Чеклист для батьків</p>
-        <ul>
-          {mission.checklist.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mission-actions">
-        <button className="mp-secondary" type="button" onClick={onRetry}>
-          <RotateCcw size={17} aria-hidden="true" />
-          Пройти ще раз
-        </button>
-        <a className="mp-primary link" href="#/missions">
-          До місій
-        </a>
+      <div className="result-actions-v2">
+        <button type="button" onClick={onRetry}><RotateCcw size={17} /> Пройти ще раз</button>
+        <a href="#/missions">До інших місій <ArrowRight size={17} /></a>
       </div>
     </section>
   );

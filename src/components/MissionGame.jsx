@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { ArrowRight, Headphones, Play, ShieldCheck } from "lucide-react";
 import ChatInvestigationScene from "./ChatInvestigationScene.jsx";
 import DomainPuzzle from "./DomainPuzzle.jsx";
 import EvidencePanel from "./EvidencePanel.jsx";
@@ -19,42 +20,22 @@ function calculateResult({ mission, evidenceCount, domainCompleted, selectedActi
   const evidenceXp = evidenceCount * mission.scoring.evidence;
   const domainXp = domainCompleted ? mission.scoring.domainComplete : 0;
   const finalXp = selectedAction?.correct && finishReason === "complete" ? mission.scoring.finalCorrect : 0;
-  const bonusXp =
-    selectedAction?.correct && finishReason === "complete" && focus >= 4 && !openedLink
-      ? mission.scoring.highFocusBonus
-      : 0;
+  const bonusXp = selectedAction?.correct && focus >= 4 && !openedLink ? mission.scoring.highFocusBonus : 0;
   const score = Math.max(0, evidenceXp + domainXp + finalXp + penaltyXp + bonusXp);
   const rank = getRank(mission.ranks, score);
-  const outcome =
-    finishReason === "focus" || !selectedAction?.correct
-      ? "bad"
-      : score >= 280
-        ? "excellent"
-        : "medium";
+  const outcome = finishReason === "focus" || !selectedAction?.correct
+    ? "bad"
+    : score >= 280
+      ? "excellent"
+      : "medium";
 
-  return {
-    evidenceXp,
-    domainXp,
-    finalXp,
-    bonusXp,
-    penaltyXp,
-    score,
-    rank,
-    outcome,
-  };
+  return { evidenceXp, domainXp, finalXp, bonusXp, penaltyXp, score, rank, outcome };
 }
 
 export default function MissionGame({ mission }) {
-  const evidenceSignals = useMemo(
-    () => mission.hotspots.filter((item) => item.type === "evidence"),
-    [mission],
-  );
-  const hotspotById = useMemo(
-    () => new Map(mission.hotspots.map((item) => [item.id, item])),
-    [mission],
-  );
-
-  const [started, setStarted] = useState(false);
+  const evidenceSignals = useMemo(() => mission.hotspots.filter((item) => item.type === "evidence"), [mission]);
+  const hotspotById = useMemo(() => new Map(mission.hotspots.map((item) => [item.id, item])), [mission]);
+  const [phase, setPhase] = useState("briefing");
   const [foundEvidenceIds, setFoundEvidenceIds] = useState([]);
   const [clickedDecoyIds, setClickedDecoyIds] = useState([]);
   const [domainCorrectIds, setDomainCorrectIds] = useState([]);
@@ -65,7 +46,6 @@ export default function MissionGame({ mission }) {
   const [mistakes, setMistakes] = useState(0);
   const [penaltyXp, setPenaltyXp] = useState(0);
   const [openedLink, setOpenedLink] = useState(false);
-  const [finished, setFinished] = useState(false);
   const [finishReason, setFinishReason] = useState(null);
   const [toast, setToast] = useState(null);
 
@@ -77,17 +57,14 @@ export default function MissionGame({ mission }) {
     () => evidenceSignals.filter((item) => !foundEvidenceIds.includes(item.id)),
     [evidenceSignals, foundEvidenceIds],
   );
-
-  const domainUnlocked = foundEvidenceIds.length >= mission.requiredEvidence;
   const domainCompleted = domainCorrectIds.length >= mission.requiredDomainCorrect;
-  const finalUnlocked = domainUnlocked && domainCompleted && focus > 0;
   const liveXp = Math.max(
     0,
     foundEvidenceIds.length * mission.scoring.evidence +
       (domainCompleted ? mission.scoring.domainComplete : 0) +
       penaltyXp,
   );
-  const stage = finished ? 4 : finalUnlocked ? 3 : domainUnlocked ? 2 : started ? 1 : 1;
+  const stage = phase === "briefing" ? 0 : phase === "chat" ? 1 : phase === "domain" ? 2 : phase === "action" ? 3 : 4;
   const result = calculateResult({
     mission,
     evidenceCount: foundEvidenceIds.length,
@@ -100,8 +77,14 @@ export default function MissionGame({ mission }) {
   });
 
   function showToast(text, xp) {
-    setToast({ text, xp, key: Date.now() });
-    window.setTimeout(() => setToast(null), 1150);
+    const key = Date.now();
+    setToast({ text, xp, key });
+    window.setTimeout(() => setToast((current) => (current?.key === key ? null : current)), 1300);
+  }
+
+  function finishByFocus() {
+    setFinishReason("focus");
+    setPhase("result");
   }
 
   function applyPenalty({ focusPenalty = 1, riskPenalty = 10, xpPenalty = mission.scoring.wrongClick, text }) {
@@ -111,16 +94,11 @@ export default function MissionGame({ mission }) {
     setMistakes((current) => current + 1);
     setPenaltyXp((current) => current + xpPenalty);
     showToast(text, xpPenalty);
-
-    if (nextFocus === 0) {
-      setFinishReason("focus");
-      setFinished(true);
-    }
+    if (nextFocus === 0) window.setTimeout(finishByFocus, 450);
   }
 
   function inspectHotspot(item) {
-    if (!item || finished) return;
-
+    if (!item || phase !== "chat") return;
     if (item.type === "evidence") {
       if (foundEvidenceIds.includes(item.id)) return;
       setFoundEvidenceIds((current) => [...current, item.id]);
@@ -128,55 +106,45 @@ export default function MissionGame({ mission }) {
       showToast("Доказ знайдено", mission.scoring.evidence);
       return;
     }
-
     if (clickedDecoyIds.includes(item.id)) return;
     setClickedDecoyIds((current) => [...current, item.id]);
-    applyPenalty({
-      text: "Це не головна ознака. Шукай уважніше.",
-    });
+    applyPenalty({ text: "Хибний слід. Фокус зменшено." });
   }
 
   function openDangerLink() {
-    if (openedLink || finished) return;
+    if (openedLink || phase !== "chat") return;
     const danger = mission.chatMessages.find((message) => message.dangerAction)?.dangerAction;
     setOpenedLink(true);
     applyPenalty({
       focusPenalty: danger?.focusPenalty || 2,
       riskPenalty: danger?.riskPenalty || 24,
       xpPenalty: mission.scoring.openedLink,
-      text: "Посилання відкрито. Ризик зріс.",
+      text: "Ти відкрив неперевірене посилання.",
     });
   }
 
   function selectDomainOption(option) {
-    if (!domainUnlocked || domainCompleted || finished) return;
+    if (domainCompleted || phase !== "domain") return;
     if (domainCorrectIds.includes(option.id) || domainWrongIds.includes(option.id)) return;
-
     if (option.correct) {
-      const nextCorrectCount = domainCorrectIds.length + 1;
+      const nextCount = domainCorrectIds.length + 1;
       setDomainCorrectIds((current) => [...current, option.id]);
       setRisk((current) => clampRisk(current - 5));
-      showToast(
-        nextCorrectCount >= mission.requiredDomainCorrect ? "Домен перевірено" : "Ризик домену знайдено",
-        nextCorrectCount >= mission.requiredDomainCorrect ? mission.scoring.domainComplete : 0,
-      );
+      showToast(nextCount >= mission.requiredDomainCorrect ? "Сайт викрито" : "Ризик позначено", nextCount >= mission.requiredDomainCorrect ? mission.scoring.domainComplete : 0);
       return;
     }
-
     setDomainWrongIds((current) => [...current, option.id]);
-    applyPenalty({
-      text: "Хибний слід у домені.",
-    });
+    applyPenalty({ text: "Це не доводить шахрайство." });
   }
 
-  function finishMission() {
-    if (!finalUnlocked || !selectedAction) return;
+  function finishMission(action) {
+    setSelectedAction(action);
     setFinishReason("complete");
-    setFinished(true);
+    window.setTimeout(() => setPhase("result"), 280);
   }
 
   function retry() {
-    setStarted(false);
+    setPhase("briefing");
     setFoundEvidenceIds([]);
     setClickedDecoyIds([]);
     setDomainCorrectIds([]);
@@ -187,49 +155,44 @@ export default function MissionGame({ mission }) {
     setMistakes(0);
     setPenaltyXp(0);
     setOpenedLink(false);
-    setFinished(false);
     setFinishReason(null);
     setToast(null);
   }
 
-  return (
-    <section className="mission-game investigation-game">
-      <GameHud
-        mission={mission}
-        xp={finished ? result.score : liveXp}
-        evidenceCount={foundEvidenceIds.length}
-        totalEvidence={evidenceSignals.length}
-        focus={focus}
-        maxFocus={mission.startFocus}
-        risk={risk}
-        stage={stage}
-      />
-
-      <div className="xp-toast-slot" aria-live="polite">
-        <XPToast toast={toast} />
-      </div>
-
-      {!started ? (
-        <div className="game-briefing">
-          <div>
-            <p className="section-eyebrow">Брифінг</p>
-            <h3>Розслідуй повідомлення</h3>
-            <p>{mission.briefing}</p>
-          </div>
-          <button className="mp-primary" type="button" onClick={() => setStarted(true)}>
-            Почати розслідування
-          </button>
+  if (phase === "briefing") {
+    return (
+      <section className="mission-game-v2 mission-intro">
+        <a className="game-exit" href="#/missions">Вийти з місії</a>
+        <div className="intro-signal" aria-hidden="true">
+          <ShieldCheck size={34} />
+          <span />
         </div>
-      ) : finished ? (
-        <ResultScreen
-          mission={mission}
-          result={result}
-          foundEvidence={foundEvidence}
-          missedEvidence={missedEvidence}
-          onRetry={retry}
-        />
-      ) : (
-        <div className="investigation-board">
+        <p className="intro-kicker">Guardly · Демо-місія 01</p>
+        <h1>{mission.title}</h1>
+        <p className="intro-copy">{mission.briefing}</p>
+        <div className="mission-order">
+          <Headphones size={20} aria-hidden="true" />
+          <div>
+            <span>Твоє завдання</span>
+            <strong>Знайди 3 сигнали небезпеки. Не тисни навмання: кожна помилка забирає фокус.</strong>
+          </div>
+        </div>
+        <button className="game-start" type="button" onClick={() => setPhase("chat")}>
+          <Play size={18} fill="currentColor" aria-hidden="true" />
+          Увійти в чат
+        </button>
+        <p className="intro-footnote">6 фокуса · 3 етапи · приблизно 4 хвилини</p>
+      </section>
+    );
+  }
+
+  return (
+    <section className={`mission-game-v2 phase-${phase}`}>
+      <GameHud mission={mission} xp={phase === "result" ? result.score : liveXp} focus={focus} maxFocus={mission.startFocus} risk={risk} stage={stage} />
+      <div className="game-toast-layer" aria-live="polite"><XPToast toast={toast} /></div>
+
+      {phase === "chat" && (
+        <div className="game-scene-layout">
           <ChatInvestigationScene
             mission={mission}
             foundEvidence={foundEvidenceIds}
@@ -238,43 +201,39 @@ export default function MissionGame({ mission }) {
             onInspect={inspectHotspot}
             onOpenDangerLink={openDangerLink}
           />
-
-          <div className="investigation-panel">
-            <EvidencePanel
-              foundEvidence={foundEvidence}
-              requiredEvidence={mission.requiredEvidence}
-              domainUnlocked={domainUnlocked}
-              domainCompleted={domainCompleted}
-              finalUnlocked={finalUnlocked}
-              mistakes={mistakes}
-              openedLink={openedLink}
-            />
-
-            <DomainPuzzle
-              puzzle={mission.domainPuzzle}
-              locked={!domainUnlocked}
-              requiredCorrect={mission.requiredDomainCorrect}
-              correctSelections={domainCorrectIds}
-              wrongSelections={domainWrongIds}
-              completed={domainCompleted}
-              remainingEvidence={Math.max(mission.requiredEvidence - foundEvidenceIds.length, 0)}
-              onSelect={selectDomainOption}
-            />
-
-            <FinalActionPanel
-              actions={mission.actions}
-              locked={!finalUnlocked}
-              selectedId={selectedAction?.id}
-              onSelect={setSelectedAction}
-              onFinish={finishMission}
-              lockReason={
-                domainUnlocked
-                  ? "Заверши доменну головоломку, щоб обрати дію."
-                  : "Збери 3 докази і перевір домен."
-              }
-            />
-          </div>
+          <EvidencePanel
+            foundEvidence={foundEvidence}
+            requiredEvidence={mission.requiredEvidence}
+            mistakes={mistakes}
+            openedLink={openedLink}
+          />
+          {foundEvidenceIds.length >= mission.requiredEvidence && (
+            <button className="scene-next" type="button" onClick={() => setPhase("domain")}>
+              Перевірити сайт у безпечному режимі
+              <ArrowRight size={18} aria-hidden="true" />
+            </button>
+          )}
         </div>
+      )}
+
+      {phase === "domain" && (
+        <DomainPuzzle
+          puzzle={mission.domainPuzzle}
+          requiredCorrect={mission.requiredDomainCorrect}
+          correctSelections={domainCorrectIds}
+          wrongSelections={domainWrongIds}
+          completed={domainCompleted}
+          onSelect={selectDomainOption}
+          onContinue={() => setPhase("action")}
+        />
+      )}
+
+      {phase === "action" && (
+        <FinalActionPanel mission={mission} actions={mission.actions} onChoose={finishMission} />
+      )}
+
+      {phase === "result" && (
+        <ResultScreen mission={mission} result={result} foundEvidence={foundEvidence} missedEvidence={missedEvidence} onRetry={retry} />
       )}
     </section>
   );

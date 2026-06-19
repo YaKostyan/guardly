@@ -25,6 +25,7 @@ function readRoute() {
 export default function App() {
   const [route, setRoute] = useState(readRoute);
   const Page = routes[route] || Home;
+  const isGameRoute = route === "/demo";
 
   useEffect(() => {
     const handleRoute = () => setRoute(readRoute());
@@ -38,11 +39,11 @@ export default function App() {
 
   return (
     <>
-      <Navbar activeRoute={routes[route] ? route : "/"} />
-      <main>
+      {!isGameRoute && <Navbar activeRoute={routes[route] ? route : "/"} />}
+      <main className={isGameRoute ? "game-route-main" : ""}>
         <Page />
       </main>
-      <Footer />
+      {!isGameRoute && <Footer />}
     </>
   );
 }
