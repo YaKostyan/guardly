@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, Headphones, Play, ShieldCheck } from "lucide-react";
+import { ArrowRight, Clock3, LockKeyhole, MessageCircle, SearchCheck, ShieldCheck } from "lucide-react";
 import ChatInvestigationScene from "./ChatInvestigationScene.jsx";
 import DomainPuzzle from "./DomainPuzzle.jsx";
 import EvidencePanel from "./EvidencePanel.jsx";
@@ -162,26 +162,65 @@ export default function MissionGame({ mission }) {
   if (phase === "briefing") {
     return (
       <section className="mission-game-v2 mission-intro">
-        <a className="game-exit" href="#/missions">Вийти з місії</a>
-        <div className="intro-signal" aria-hidden="true">
-          <ShieldCheck size={34} />
-          <span />
-        </div>
-        <p className="intro-kicker">Guardly · Демо-місія 01</p>
-        <h1>{mission.title}</h1>
-        <p className="intro-copy">{mission.briefing}</p>
-        <div className="mission-order">
-          <Headphones size={20} aria-hidden="true" />
-          <div>
-            <span>Твоє завдання</span>
-            <strong>Знайди 3 сигнали небезпеки. Не тисни навмання: кожна помилка забирає фокус.</strong>
+        <header className="intro-topbar">
+          <a className="intro-brand" href="#/" aria-label="Guardly">
+            <img src={`${import.meta.env.BASE_URL}logo.png`} alt="" />
+            <span>Guardly</span>
+          </a>
+          <div className="intro-safe-label">
+            <ShieldCheck size={16} aria-hidden="true" />
+            Без входу та реєстрації
+          </div>
+          <a className="game-exit" href="#/missions">До списку місій</a>
+        </header>
+
+        <div className="intro-content">
+          <p className="intro-kicker">Безпечна навчальна симуляція</p>
+          <h1>
+            Безкоштовні Robux: <span>перевір пропозицію</span>
+          </h1>
+          <p className="intro-copy">
+            Ти побачиш вигадану переписку та потренуєшся помічати шахрайські сигнали,
+            не ризикуючи справжнім акаунтом.
+          </p>
+
+          <div className="intro-safety-note">
+            <div><LockKeyhole size={20} aria-hidden="true" /></div>
+            <p>
+              <strong>Тут безпечно</strong>
+              <span>Ми не просимо логін, пароль чи особисті дані. Усі посилання працюють лише всередині гри.</span>
+            </p>
+          </div>
+
+          <div className="intro-steps" aria-label="Етапи місії">
+            <div>
+              <span><MessageCircle size={18} aria-hidden="true" /></span>
+              <p><b>1. Переглянь чат</b><small>Звертай увагу на деталі</small></p>
+            </div>
+            <div>
+              <span><SearchCheck size={18} aria-hidden="true" /></span>
+              <p><b>2. Перевір сайт</b><small>Порівняй адресу й запити</small></p>
+            </div>
+            <div>
+              <span><ShieldCheck size={18} aria-hidden="true" /></span>
+              <p><b>3. Обери дію</b><small>Захисти свій акаунт</small></p>
+            </div>
+          </div>
+
+          <div className="intro-action-row">
+            <button className="game-start" type="button" onClick={() => setPhase("chat")}>
+              Розпочати місію
+              <ArrowRight size={18} aria-hidden="true" />
+            </button>
+            <p>Можна помилятися — це тренування.</p>
+          </div>
+
+          <div className="intro-meta">
+            <span><Clock3 size={14} aria-hidden="true" /> 3–4 хвилини</span>
+            <span><ShieldCheck size={14} aria-hidden="true" /> Без справжніх посилань</span>
+            <span><SearchCheck size={14} aria-hidden="true" /> Пояснення після гри</span>
           </div>
         </div>
-        <button className="game-start" type="button" onClick={() => setPhase("chat")}>
-          <Play size={18} fill="currentColor" aria-hidden="true" />
-          Увійти в чат
-        </button>
-        <p className="intro-footnote">6 фокуса · 3 етапи · приблизно 4 хвилини</p>
       </section>
     );
   }
