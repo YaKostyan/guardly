@@ -744,6 +744,67 @@
   font-size: 15px;
 }
 
+.tutorial-coach {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  margin: 8px 16px 0;
+  padding: 10px 12px;
+  color: #dff9e7;
+  background: rgba(34, 197, 94, 0.09);
+  border: 1px solid rgba(34, 197, 94, 0.28);
+  border-radius: 8px;
+  animation: tutorial-coach-in 0.24s ease-out both;
+}
+
+.tutorial-coach > span {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  color: #86efac;
+  place-items: center;
+  background: rgba(34, 197, 94, 0.13);
+  border-radius: 7px;
+}
+
+.tutorial-coach strong,
+.tutorial-coach p {
+  display: block;
+}
+
+.tutorial-coach strong {
+  margin-bottom: 2px;
+  font-family: var(--fh);
+  font-size: 11px;
+}
+
+.tutorial-coach p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.tutorial-coach p b {
+  color: #fff;
+}
+
+.tutorial-coach > button {
+  padding: 7px 8px;
+  color: rgba(255, 255, 255, 0.58);
+  font: 700 10px var(--fb);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+}
+
+.tutorial-coach > button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+}
+
 .discord-message-feed {
   min-height: 0;
   overflow-y: auto;
@@ -820,6 +881,39 @@
   color: #fff;
   background: rgba(232, 71, 46, 0.12);
   box-shadow: 0 0 0 3px rgba(232, 71, 46, 0.06);
+}
+
+.mission-game-v2 .evidence-hotspot.tutorial-target:not(:disabled) {
+  color: #fff;
+  background: rgba(34, 197, 94, 0.17);
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.48), 0 0 20px rgba(34, 197, 94, 0.18);
+  animation: tutorial-target-pulse 1.45s ease-in-out infinite;
+}
+
+.tutorial-active .evidence-hotspot:disabled,
+.tutorial-active .discord-link-preview > button:disabled {
+  cursor: default;
+}
+
+.tutorial-active .discord-link-preview > button:disabled {
+  opacity: 0.45;
+}
+
+@keyframes tutorial-coach-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes tutorial-target-pulse {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.45), 0 0 14px rgba(34, 197, 94, 0.12); }
+  50% { box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2), 0 0 24px rgba(34, 197, 94, 0.24); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tutorial-coach,
+  .mission-game-v2 .evidence-hotspot.tutorial-target:not(:disabled) {
+    animation: none;
+  }
 }
 
 .mission-game-v2 .evidence-hotspot.found {

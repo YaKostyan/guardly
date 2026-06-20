@@ -3,6 +3,8 @@ export default function EvidenceHotspot({
   state,
   onInspect,
   className = "",
+  disabled = false,
+  describedBy,
   children,
 }) {
   const isDone = state === "found" || state === "miss";
@@ -12,8 +14,9 @@ export default function EvidenceHotspot({
       type="button"
       className={`evidence-hotspot ${className} ${state || ""}`}
       onClick={() => onInspect(item)}
-      disabled={isDone}
+      disabled={isDone || disabled}
       aria-label={`Перевірити: ${item.title}`}
+      aria-describedby={describedBy}
     >
       {children}
     </button>

@@ -8,20 +8,37 @@ function hotspotState(hotspot, foundEvidence, clickedDecoys) {
   return "";
 }
 
-export default function ChatInvestigationScene({ mission, foundEvidence, clickedDecoys, openedLink, onInspect, onOpenDangerLink }) {
+export default function ChatInvestigationScene({
+  mission,
+  foundEvidence,
+  clickedDecoys,
+  openedLink,
+  tutorialActive,
+  onInspect,
+  onOpenDangerLink,
+  onSkipTutorial,
+}) {
   const hotspots = new Map(mission.hotspots.map((item) => [item.id, item]));
   const player = mission.player ?? { name: "Користувач", avatar: "К", status: "онлайн" };
   function renderHotspot(id, children, className = "") {
     const item = hotspots.get(id);
+    const isTutorialTarget = tutorialActive && id === "free-robux";
     return (
-      <EvidenceHotspot item={item} state={hotspotState(item, foundEvidence, clickedDecoys)} onInspect={onInspect} className={className}>
+      <EvidenceHotspot
+        item={item}
+        state={hotspotState(item, foundEvidence, clickedDecoys)}
+        onInspect={onInspect}
+        className={`${className} ${isTutorialTarget ? "tutorial-target" : ""}`}
+        disabled={tutorialActive && !isTutorialTarget}
+        describedBy={isTutorialTarget ? "mission-tutorial" : undefined}
+      >
         {children}
       </EvidenceHotspot>
     );
   }
 
   return (
-    <section className="discord-game-window" aria-label="Чат із підозрілим користувачем">
+    <section className={`discord-game-window ${tutorialActive ? "tutorial-active" : ""}`} aria-label="Чат із підозрілим користувачем">
       <aside className="discord-server-rail" aria-hidden="true">
         <div className="server-home"><Gamepad2 size={20} /></div>
         <span />
@@ -62,10 +79,21 @@ export default function ChatInvestigationScene({ mission, foundEvidence, clicked
           <div><strong>Завдання: знайди 3 сигнали пастки</strong><span>Клікай лише на деталі, які справді доводять ризик.</span></div>
           <b>{foundEvidence.length}/3</b>
         </div>
-        <div className="mobile-tap-guide">
-          <MousePointerClick size={16} aria-hidden="true" />
-          Натискай прямо на підозрілі слова, ім'я або посилання.
-        </div>
+        {tutorialActive ? (
+          <div className="tutorial-coach" id="mission-tutorial" role="status">
+            <span><MousePointerClick size={18} aria-hidden="true" /></span>
+            <div>
+              <strong>Перший крок</strong>
+              <p>Знайди в повідомленні обіцянку <b>5000 Robux безкоштовно</b> та натисни на неї.</p>
+            </div>
+            <button type="button" onClick={onSkipTutorial}>Пропустити</button>
+          </div>
+        ) : (
+          <div className="mobile-tap-guide">
+            <MousePointerClick size={16} aria-hidden="true" />
+            Натискай прямо на підозрілі слова, ім'я або посилання.
+          </div>
+        )}
 
         <div className="discord-message-feed">
           <div className="channel-welcome">
@@ -94,7 +122,7 @@ export default function ChatInvestigationScene({ mission, foundEvidence, clicked
                   {renderHotspot("fake-domain", <strong>rbx-gift.example/claim-now</strong>, "domain-hotspot-v2")}
                   <p>Забери нагороду, поки вона доступна.</p>
                 </div>
-                <button type="button" onClick={onOpenDangerLink} disabled={openedLink}>{openedLink ? "Відкрито" : "Отримати"}</button>
+                <button type="button" onClick={onOpenDangerLink} disabled={openedLink || tutorialActive}>{openedLink ? "Відкрито" : "Отримати"}</button>
               </div>
               <p className="pressure-message">{renderHotspot("time-pressure", <b>Тільки швидко.</b>, "text-hotspot-v2")} Посилання працює ще 5 хвилин.</p>
             </div>

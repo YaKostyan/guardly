@@ -49,6 +49,7 @@ export default function MissionGame({ mission }) {
   const [openedLink, setOpenedLink] = useState(false);
   const [finishReason, setFinishReason] = useState(null);
   const [toast, setToast] = useState(null);
+  const [tutorialActive, setTutorialActive] = useState(true);
   const completionTracked = useRef(false);
 
   const foundEvidence = useMemo(
@@ -116,6 +117,11 @@ export default function MissionGame({ mission }) {
 
   function inspectHotspot(item) {
     if (!item || phase !== "chat") return;
+    if (tutorialActive) {
+      if (item.id !== "free-robux") return;
+      setTutorialActive(false);
+      trackEvent("mission_tutorial_complete", { mission_id: mission.id });
+    }
     if (item.type === "evidence") {
       if (foundEvidenceIds.includes(item.id)) return;
       setFoundEvidenceIds((current) => [...current, item.id]);
@@ -182,6 +188,12 @@ export default function MissionGame({ mission }) {
     setOpenedLink(false);
     setFinishReason(null);
     setToast(null);
+    setTutorialActive(true);
+  }
+
+  function skipTutorial() {
+    setTutorialActive(false);
+    trackEvent("mission_tutorial_skip", { mission_id: mission.id });
   }
 
   if (phase === "briefing") {
@@ -262,8 +274,10 @@ export default function MissionGame({ mission }) {
             foundEvidence={foundEvidenceIds}
             clickedDecoys={clickedDecoyIds}
             openedLink={openedLink}
+            tutorialActive={tutorialActive}
             onInspect={inspectHotspot}
             onOpenDangerLink={openDangerLink}
+            onSkipTutorial={skipTutorial}
           />
           <EvidencePanel
             foundEvidence={foundEvidence}

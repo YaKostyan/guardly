@@ -749,6 +749,19 @@
     flex: 0 0 auto;
   }
 
+  .tutorial-coach {
+    grid-template-columns: auto minmax(0, 1fr);
+    margin: 7px 10px 0;
+    padding: 9px 10px;
+  }
+
+  .tutorial-coach > button {
+    grid-column: 2;
+    justify-self: start;
+    margin-top: -4px;
+    padding-left: 0;
+  }
+
   .mission-prompt-bar {
     margin: 8px 10px 0;
     padding: 9px 10px;
