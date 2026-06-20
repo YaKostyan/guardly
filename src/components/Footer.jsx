@@ -5,17 +5,14 @@ const productLinks = [
   ["#/pricing", "Ціни"],
 ];
 
-const companyLinks = [
-  ["#/", "Про Guardly"],
-  ["#/", "Блог"],
-  ["#/", "Прес-кіт"],
+const audienceLinks = [
+  ["#/parents", "Для батьків"],
+  ["#/schools", "Для шкіл"],
 ];
 
-const supportLinks = [
-  ["#/", "Допомога"],
-  ["#/", "Політика приватності"],
-  ["#/", "Умови"],
-  ["#/", "Контакти"],
+const trustLinks = [
+  ["#/privacy", "Приватність"],
+  ["https://github.com/YaKostyan/guardly", "GitHub"],
 ];
 
 function FooterColumn({ title, links }) {
@@ -45,8 +42,8 @@ export default function Footer() {
           <p>Тренажер цифрової безпеки для дітей, батьків і шкіл.</p>
         </div>
         <FooterColumn title="Продукт" links={productLinks} />
-        <FooterColumn title="Компанія" links={companyLinks} />
-        <FooterColumn title="Підтримка" links={supportLinks} />
+        <FooterColumn title="Для кого" links={audienceLinks} />
+        <FooterColumn title="Довіра" links={trustLinks} />
       </div>
       <div className="footer-bottom">
         <p>© 2026 Guardly. Усі права захищені.</p>

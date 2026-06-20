@@ -26,7 +26,7 @@ export default function Parents() {
             Дашборд показує, які загрози дитина вже розпізнає, де помиляється і яку тему
             краще повторити. Без стеження. Тільки прогрес.
           </p>
-          <Button href="#/demo">Спробувати безкоштовно</Button>
+          <Button href="#/demo" analytics={{ name: "cta_click", params: { source: "parents_hero", target: "demo" } }}>Спробувати безкоштовно</Button>
         </div>
         <div className="dashboard-preview">
           <div className="dash-head">

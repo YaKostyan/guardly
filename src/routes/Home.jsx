@@ -3,6 +3,7 @@ import { useState } from "react";
 import Button from "../components/Button.jsx";
 import MissionCard from "../components/MissionCard.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
+import DemandPoll from "../components/DemandPoll.jsx";
 import { missions } from "../data/missions.js";
 
 const choices = [
@@ -37,25 +38,25 @@ export default function Home() {
             коротких квестів.
           </p>
           <div className="hero-ctas">
-            <Button href="#/demo" icon={Play}>
+            <Button href="#/demo" icon={Play} analytics={{ name: "cta_click", params: { source: "home_hero", target: "demo" } }}>
               Почати безкоштовно
             </Button>
-            <Button href="#/missions" variant="ghost" icon={ArrowRight}>
+            <Button href="#/missions" variant="ghost" icon={ArrowRight} analytics={{ name: "cta_click", params: { source: "home_hero", target: "missions" } }}>
               Переглянути місії
             </Button>
           </div>
           <div className="hero-stats" aria-label="Статистика Guardly">
             <div>
-              <strong>12K+</strong>
-              <span>Учнів</span>
+              <strong>1</strong>
+              <span>демо-місія</span>
             </div>
             <div>
-              <strong>48+</strong>
-              <span>Місій</span>
+              <strong>3–4 хв</strong>
+              <span>на проходження</span>
             </div>
             <div>
-              <strong>3 хв</strong>
-              <span>Середня місія</span>
+              <strong>0 грн</strong>
+              <span>для старту</span>
             </div>
           </div>
         </div>
@@ -93,15 +94,15 @@ export default function Home() {
           </div>
           <div className="xp-widget">
             <div>
-              <span>Прогрес розділу</span>
-              <strong>1 240 XP</strong>
+              <span>Нагорода демо</span>
+              <strong>до 300 XP</strong>
               <div className="xp-track">
                 <span />
               </div>
             </div>
             <div className="streak">
-              <strong>9</strong>
-              <span>днів</span>
+              <strong>4</strong>
+              <span>хв</span>
             </div>
           </div>
         </div>
@@ -109,22 +110,22 @@ export default function Home() {
 
       <section className="section-pad white">
         <SectionHeader
-          eyebrow="Проблема реальна"
-          title="Діти стикаються з онлайн-пастками там, де грають і спілкуються"
-          subtitle="Guardly тренує рішення у середовищах, які вже знайомі дитині."
+          eyebrow="Що вже працює"
+          title="Один завершений сценарій, який можна перевірити просто зараз"
+          subtitle="Не обіцянка майбутнього продукту, а готова інтерактивна місія з результатом."
         />
         <div className="stats-grid">
           <article>
-            <strong>1 з 3</strong>
-            <p>дітей 8–15 років отримували підозрілі повідомлення в месенджерах.</p>
+            <strong>3 етапи</strong>
+            <p>Чат, перевірка підозрілого сайту та фінальне рішення.</p>
           </article>
           <article>
-            <strong>67%</strong>
-            <p>підлітків не завжди відрізняють фейкове посилання з першого погляду.</p>
+            <strong>6 сигналів</strong>
+            <p>Подарунок, тиск часу, фейковий домен та інші ознаки пастки.</p>
           </article>
           <article>
-            <strong>4 хв</strong>
-            <p>іноді достатньо, щоб втратити доступ до ігрового або поштового акаунта.</p>
+            <strong>1 чеклист</strong>
+            <p>Короткий розбір для батьків після завершення місії.</p>
           </article>
         </div>
       </section>
@@ -175,6 +176,8 @@ export default function Home() {
         </div>
       </section>
 
+      <DemandPoll />
+
       <section className="audience-section">
         <SectionHeader
           eyebrow="Для кого"
@@ -204,10 +207,10 @@ export default function Home() {
         <h2>Перша місія — безкоштовно. Назавжди.</h2>
         <p>Почни просто зараз — без реєстрації для першого кроку.</p>
         <div>
-          <Button href="#/demo" variant="white" icon={Play}>
+          <Button href="#/demo" variant="white" icon={Play} analytics={{ name: "cta_click", params: { source: "home_bottom", target: "demo" } }}>
             Почати безкоштовно
           </Button>
-          <Button href="#/schools" variant="outline-white">
+          <Button href="#/schools" variant="outline-white" analytics={{ name: "cta_click", params: { source: "home_bottom", target: "schools" } }}>
             Для шкіл і курсів
           </Button>
         </div>

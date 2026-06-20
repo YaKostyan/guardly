@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ArrowRight, Clock3, LockKeyhole, MessageCircle, SearchCheck, ShieldCheck } from "lucide-react";
 import ChatInvestigationScene from "./ChatInvestigationScene.jsx";
 import DomainPuzzle from "./DomainPuzzle.jsx";
@@ -7,6 +7,7 @@ import FinalActionPanel from "./FinalActionPanel.jsx";
 import GameHud from "./GameHud.jsx";
 import ResultScreen from "./ResultScreen.jsx";
 import XPToast from "./XPToast.jsx";
+import { trackEvent } from "../lib/analytics.js";
 
 function clampRisk(value) {
   return Math.max(0, Math.min(value, 100));
@@ -48,6 +49,7 @@ export default function MissionGame({ mission }) {
   const [openedLink, setOpenedLink] = useState(false);
   const [finishReason, setFinishReason] = useState(null);
   const [toast, setToast] = useState(null);
+  const completionTracked = useRef(false);
 
   const foundEvidence = useMemo(
     () => foundEvidenceIds.map((id) => hotspotById.get(id)).filter(Boolean),
@@ -76,6 +78,21 @@ export default function MissionGame({ mission }) {
     finishReason,
   });
 
+  useEffect(() => {
+    if (phase === "briefing") completionTracked.current = false;
+    if (phase === "result" && !completionTracked.current) {
+      completionTracked.current = true;
+      trackEvent("mission_complete", {
+        mission_id: mission.id,
+        outcome: result.outcome,
+        rank: result.rank.id,
+        score: result.score,
+        evidence_count: foundEvidenceIds.length,
+        mistakes,
+      });
+    }
+  }, [phase]);
+
   function showToast(text, xp) {
     const key = Date.now();
     setToast({ text, xp, key });
@@ -103,11 +120,13 @@ export default function MissionGame({ mission }) {
       if (foundEvidenceIds.includes(item.id)) return;
       setFoundEvidenceIds((current) => [...current, item.id]);
       setRisk((current) => clampRisk(current - 4));
+      trackEvent("evidence_found", { mission_id: mission.id, evidence_id: item.id });
       showToast("Доказ знайдено", mission.scoring.evidence);
       return;
     }
     if (clickedDecoyIds.includes(item.id)) return;
     setClickedDecoyIds((current) => [...current, item.id]);
+    trackEvent("mission_mistake", { mission_id: mission.id, reason: "decoy", target_id: item.id });
     applyPenalty({ text: "Хибний слід. Фокус зменшено." });
   }
 
@@ -115,6 +134,7 @@ export default function MissionGame({ mission }) {
     if (openedLink || phase !== "chat") return;
     const danger = mission.chatMessages.find((message) => message.dangerAction)?.dangerAction;
     setOpenedLink(true);
+    trackEvent("mission_mistake", { mission_id: mission.id, reason: "opened_link" });
     applyPenalty({
       focusPenalty: danger?.focusPenalty || 2,
       riskPenalty: danger?.riskPenalty || 24,
@@ -130,20 +150,25 @@ export default function MissionGame({ mission }) {
       const nextCount = domainCorrectIds.length + 1;
       setDomainCorrectIds((current) => [...current, option.id]);
       setRisk((current) => clampRisk(current - 5));
+      trackEvent("domain_signal_found", { mission_id: mission.id, signal_id: option.id });
+      if (nextCount >= mission.requiredDomainCorrect) trackEvent("domain_puzzle_complete", { mission_id: mission.id });
       showToast(nextCount >= mission.requiredDomainCorrect ? "Сайт викрито" : "Ризик позначено", nextCount >= mission.requiredDomainCorrect ? mission.scoring.domainComplete : 0);
       return;
     }
     setDomainWrongIds((current) => [...current, option.id]);
+    trackEvent("mission_mistake", { mission_id: mission.id, reason: "domain_decoy", target_id: option.id });
     applyPenalty({ text: "Це не доводить шахрайство." });
   }
 
   function finishMission(action) {
+    trackEvent("final_action_selected", { mission_id: mission.id, action_id: action.id, correct: action.correct });
     setSelectedAction(action);
     setFinishReason("complete");
     window.setTimeout(() => setPhase("result"), 280);
   }
 
   function retry() {
+    trackEvent("mission_retry", { mission_id: mission.id });
     setPhase("briefing");
     setFoundEvidenceIds([]);
     setClickedDecoyIds([]);
@@ -208,7 +233,7 @@ export default function MissionGame({ mission }) {
           </div>
 
           <div className="intro-action-row">
-            <button className="game-start" type="button" onClick={() => setPhase("chat")}>
+            <button className="game-start" type="button" onClick={() => { trackEvent("mission_start", { mission_id: mission.id }); setPhase("chat"); }}>
               Розпочати місію
               <ArrowRight size={18} aria-hidden="true" />
             </button>
@@ -247,7 +272,7 @@ export default function MissionGame({ mission }) {
             openedLink={openedLink}
           />
           {foundEvidenceIds.length >= mission.requiredEvidence && (
-            <button className="scene-next" type="button" onClick={() => setPhase("domain")}>
+            <button className="scene-next" type="button" onClick={() => { trackEvent("mission_phase", { mission_id: mission.id, phase: "domain" }); setPhase("domain"); }}>
               Перевірити сайт у безпечному режимі
               <ArrowRight size={18} aria-hidden="true" />
             </button>
@@ -263,7 +288,7 @@ export default function MissionGame({ mission }) {
           wrongSelections={domainWrongIds}
           completed={domainCompleted}
           onSelect={selectDomainOption}
-          onContinue={() => setPhase("action")}
+          onContinue={() => { trackEvent("mission_phase", { mission_id: mission.id, phase: "action" }); setPhase("action"); }}
         />
       )}
 

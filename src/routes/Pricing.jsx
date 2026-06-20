@@ -44,7 +44,7 @@ export default function Pricing() {
             після кожного блоку.
           </p>
         </div>
-        <Button href="#/schools" variant="white">
+        <Button href="#/schools" variant="white" analytics={{ name: "cta_click", params: { source: "pricing_school", target: "schools" } }}>
           Отримати пропозицію
         </Button>
       </section>

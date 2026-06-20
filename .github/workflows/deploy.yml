@@ -43,6 +43,7 @@ jobs:
         run: pnpm run build
         env:
           GITHUB_PAGES: "true"
+          VITE_GA_MEASUREMENT_ID: ${{ vars.VITE_GA_MEASUREMENT_ID }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

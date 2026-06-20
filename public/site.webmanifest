@@ -1,0 +1,19 @@
+{
+  "name": "Guardly — цифрова безпека",
+  "short_name": "Guardly",
+  "description": "Інтерактивні місії з цифрової безпеки.",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#1a1a1f",
+  "theme_color": "#1a1a1f",
+  "lang": "uk",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

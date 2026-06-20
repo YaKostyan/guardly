@@ -58,7 +58,7 @@ export default function Navbar({ activeRoute }) {
             </li>
           ))}
         </ul>
-        <Button href="#/demo" icon={Play} className="nav-cta">
+        <Button href="#/demo" icon={Play} className="nav-cta" analytics={{ name: "cta_click", params: { source: "navigation", target: "demo" } }}>
           Почати безкоштовно
         </Button>
         <p className="nav-mobile-note">Перша місія без реєстрації та картки.</p>

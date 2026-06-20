@@ -1,4 +1,5 @@
 import { ArrowRight, Clock, LockKeyhole, Star } from "lucide-react";
+import { trackEvent } from "../lib/analytics.js";
 
 export default function MissionCard({ mission, compact = false }) {
   const available = mission.id === "robux-scam";
@@ -27,7 +28,7 @@ export default function MissionCard({ mission, compact = false }) {
       </div>
       <div className={`mission-card-action ${available ? "available" : "locked"}`}>
         {available ? (
-          <a href="#/demo">
+          <a href="#/demo" onClick={() => trackEvent("mission_card_click", { mission_id: mission.id })}>
             Розпочати місію
             <ArrowRight size={15} aria-hidden="true" />
           </a>

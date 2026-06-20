@@ -24,7 +24,7 @@ export default function Schools() {
             Guardly дає готові місії, статистику класу і зрозумілі розбори, щоб учні
             практикували реальні рішення, а не просто слухали правила.
           </p>
-          <Button href="#/demo">Показати демо</Button>
+          <Button href="#/demo" analytics={{ name: "cta_click", params: { source: "schools_hero", target: "demo" } }}>Показати демо</Button>
         </div>
         <div className="lesson-preview">
           <div className="lesson-row head">

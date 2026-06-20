@@ -92,7 +92,7 @@ export default function Missions() {
       <section className="cta-section">
         <h2>Спробуй формат на демо-квесті.</h2>
         <p>Чотири ситуації, миттєвий фідбек і результат без реєстрації.</p>
-        <Button href="#/demo">Запустити демо</Button>
+        <Button href="#/demo" analytics={{ name: "cta_click", params: { source: "missions_bottom", target: "demo" } }}>Запустити демо</Button>
       </section>
     </>
   );

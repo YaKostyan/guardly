@@ -1,10 +1,40 @@
-import { AlertTriangle, ArrowRight, Check, RotateCcw, ShieldCheck, Sparkles, Trophy } from "lucide-react";
+import { AlertTriangle, ArrowRight, Check, RotateCcw, Share2, ShieldCheck, Sparkles, Trophy } from "lucide-react";
+import { useState } from "react";
 import BadgeUnlock from "./BadgeUnlock.jsx";
+import { trackEvent } from "../lib/analytics.js";
 
 export default function ResultScreen({ mission, result, foundEvidence, missedEvidence, onRetry }) {
+  const [shareStatus, setShareStatus] = useState("");
   const success = result.outcome !== "bad";
   const title = result.outcome === "excellent" ? mission.result.excellentTitle : result.outcome === "medium" ? mission.result.mediumTitle : mission.result.badTitle;
   const copy = result.outcome === "excellent" ? mission.result.excellentExplanation : result.outcome === "medium" ? mission.result.mediumExplanation : mission.result.wrongExplanation;
+
+  async function shareResult() {
+    const url = new URL(import.meta.env.BASE_URL, window.location.origin);
+    url.searchParams.set("utm_source", "result_share");
+    url.searchParams.set("utm_medium", "referral");
+    url.searchParams.set("utm_campaign", mission.id);
+    url.hash = "/demo";
+    const shareData = {
+      title: "Guardly — місія завершена",
+      text: `Я отримав ранг ${result.rank.id} «${result.rank.title}» у місії Guardly. Спробуй розпізнати пастку з Robux.`,
+      url: url.toString(),
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+        trackEvent("result_share", { mission_id: mission.id, method: "native", rank: result.rank.id });
+        setShareStatus("Дякуємо, що поділилися Guardly.");
+      } else {
+        await navigator.clipboard.writeText(`${shareData.text} ${shareData.url}`);
+        trackEvent("result_share", { mission_id: mission.id, method: "clipboard", rank: result.rank.id });
+        setShareStatus("Посилання скопійовано.");
+      }
+    } catch (error) {
+      if (error?.name !== "AbortError") setShareStatus("Не вдалося поділитися. Спробуйте ще раз.");
+    }
+  }
 
   return (
     <section className={`result-screen-v2 ${success ? "success" : "danger"}`}>
@@ -47,9 +77,11 @@ export default function ResultScreen({ mission, result, foundEvidence, missedEvi
       </div>
 
       <div className="result-actions-v2">
+        <button className="result-share" type="button" onClick={shareResult}><Share2 size={17} /> Поділитися результатом</button>
         <button type="button" onClick={onRetry}><RotateCcw size={17} /> Пройти ще раз</button>
         <a href="#/missions">До інших місій <ArrowRight size={17} /></a>
       </div>
+      {shareStatus && <p className="share-status" role="status">{shareStatus}</p>}
     </section>
   );
 }
