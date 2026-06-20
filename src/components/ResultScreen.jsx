@@ -6,8 +6,10 @@ import { trackEvent } from "../lib/analytics.js";
 export default function ResultScreen({ mission, result, foundEvidence, missedEvidence, onRetry }) {
   const [shareStatus, setShareStatus] = useState("");
   const success = result.outcome !== "bad";
-  const title = result.outcome === "excellent" ? mission.result.excellentTitle : result.outcome === "medium" ? mission.result.mediumTitle : mission.result.badTitle;
-  const copy = result.outcome === "excellent" ? mission.result.excellentExplanation : result.outcome === "medium" ? mission.result.mediumExplanation : mission.result.wrongExplanation;
+  const actionFeedback = mission.result.actionFeedback?.[result.actionId];
+  const title = result.outcome === "excellent" ? mission.result.excellentTitle : result.outcome === "medium" ? mission.result.mediumTitle : actionFeedback?.title || mission.result.badTitle;
+  const copy = result.outcome === "excellent" ? mission.result.excellentExplanation : result.outcome === "medium" ? mission.result.mediumExplanation : actionFeedback?.explanation || mission.result.wrongExplanation;
+  const resultLabel = success ? "Місію завершено" : actionFeedback?.label || "Місію провалено";
 
   async function shareResult() {
     const url = new URL(import.meta.env.BASE_URL, window.location.origin);
@@ -40,7 +42,7 @@ export default function ResultScreen({ mission, result, foundEvidence, missedEvi
     <section className={`result-screen-v2 ${success ? "success" : "danger"}`}>
       <div className="result-celebration">
         <div className="rank-orbit"><span>{result.rank.id}</span><i /><i /><i /></div>
-        <p>{success ? "Місію завершено" : "Місію провалено"}</p>
+        <p>{resultLabel}</p>
         <h1>{title}</h1>
         <p className="result-explanation">{copy}</p>
         <div className="result-xp"><Trophy size={20} /><strong>{result.score} XP</strong><span>{result.rank.title}</span></div>

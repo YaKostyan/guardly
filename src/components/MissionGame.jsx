@@ -30,7 +30,17 @@ function calculateResult({ mission, evidenceCount, domainCompleted, selectedActi
       ? "excellent"
       : "medium";
 
-  return { evidenceXp, domainXp, finalXp, bonusXp, penaltyXp, score, rank, outcome };
+  return {
+    evidenceXp,
+    domainXp,
+    finalXp,
+    bonusXp,
+    penaltyXp,
+    score,
+    rank,
+    outcome,
+    actionId: selectedAction?.id,
+  };
 }
 
 export default function MissionGame({ mission }) {
