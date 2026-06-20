@@ -10,6 +10,7 @@ function hotspotState(hotspot, foundEvidence, clickedDecoys) {
 
 export default function ChatInvestigationScene({ mission, foundEvidence, clickedDecoys, openedLink, onInspect, onOpenDangerLink }) {
   const hotspots = new Map(mission.hotspots.map((item) => [item.id, item]));
+  const player = mission.player ?? { name: "Користувач", avatar: "К", status: "онлайн" };
   function renderHotspot(id, children, className = "") {
     const item = hotspots.get(id);
     return (
@@ -44,8 +45,8 @@ export default function ChatInvestigationScene({ mission, foundEvidence, clicked
         </div>
         <div className="voice-channel"><span>Голосовий канал</span><p><Users size={14} /> Лобі</p></div>
         <div className="discord-user-bar">
-          <div className="player-avatar">К</div>
-          <div><strong>Костя</strong><span>онлайн</span></div>
+          <div className="player-avatar">{player.avatar}</div>
+          <div><strong>{player.name}</strong><span>{player.status}</span></div>
           <Mic size={15} /><Headphones size={15} /><Settings size={15} />
         </div>
       </aside>

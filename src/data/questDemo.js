@@ -25,6 +25,11 @@ export const questDemo = {
     badge: "Gift helper",
     status: "Онлайн",
   },
+  player: {
+    name: "Користувач",
+    avatar: "К",
+    status: "онлайн",
+  },
   hotspots: [
     {
       id: "username",
