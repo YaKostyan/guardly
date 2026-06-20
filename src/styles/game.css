@@ -29,9 +29,9 @@
   align-items: center;
   justify-content: center;
   padding: 104px 24px 48px;
-  color: var(--black);
+  color: #fff;
   text-align: center;
-  background: var(--off-white);
+  background: #15151a;
 }
 
 .mission-intro::before {
@@ -40,7 +40,7 @@
   bottom: 0;
   left: 50%;
   width: 1px;
-  background: rgba(26, 26, 31, 0.035);
+  background: rgba(255, 255, 255, 0.025);
   content: "";
   pointer-events: none;
 }
@@ -57,8 +57,8 @@
   align-items: center;
   min-height: 72px;
   padding: 0 42px;
-  background: rgba(245, 244, 242, 0.96);
-  border-bottom: 1px solid rgba(26, 26, 31, 0.08);
+  background: rgba(21, 21, 26, 0.97);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .intro-brand {
@@ -66,7 +66,7 @@
   gap: 9px;
   align-items: center;
   justify-self: start;
-  color: var(--black);
+  color: #fff;
   font-family: var(--fh);
   font-size: 17px;
   font-weight: 800;
@@ -84,24 +84,24 @@
   gap: 7px;
   align-items: center;
   padding: 7px 10px;
-  color: #19713b;
+  color: #82e5a4;
   font-size: 11px;
   font-weight: 800;
-  background: #e5f3e9;
-  border: 1px solid #c7e5d0;
+  background: rgba(34, 197, 94, 0.09);
+  border: 1px solid rgba(34, 197, 94, 0.2);
   border-radius: 8px;
 }
 
 .game-exit {
   justify-self: end;
-  color: rgba(26, 26, 31, 0.5);
+  color: rgba(255, 255, 255, 0.46);
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
 }
 
 .game-exit:hover {
-  color: var(--black);
+  color: #fff;
 }
 
 .intro-content {
@@ -112,7 +112,7 @@
 
 .intro-kicker {
   margin-bottom: 12px;
-  color: #19713b;
+  color: #82e5a4;
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
@@ -134,7 +134,7 @@
 .intro-copy {
   max-width: 660px;
   margin: 16px auto 0;
-  color: rgba(26, 26, 31, 0.6);
+  color: rgba(255, 255, 255, 0.56);
   font-size: 16px;
   line-height: 1.6;
 }
@@ -148,19 +148,19 @@
   margin: 24px auto 0;
   padding: 14px 16px;
   text-align: left;
-  background: #fff;
-  border: 1px solid rgba(26, 26, 31, 0.09);
+  background: #202027;
+  border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 12px;
-  box-shadow: 0 10px 28px rgba(26, 26, 31, 0.05);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18);
 }
 
 .intro-safety-note > div {
   display: grid;
   width: 38px;
   height: 38px;
-  color: #19713b;
+  color: #82e5a4;
   place-items: center;
-  background: #e5f3e9;
+  background: rgba(34, 197, 94, 0.1);
   border-radius: 9px;
 }
 
@@ -175,7 +175,7 @@
 }
 
 .intro-safety-note span {
-  color: rgba(26, 26, 31, 0.54);
+  color: rgba(255, 255, 255, 0.48);
   font-size: 11px;
   line-height: 1.45;
 }
@@ -185,8 +185,8 @@
   grid-template-columns: repeat(3, 1fr);
   margin-top: 26px;
   padding: 18px 0;
-  border-top: 1px solid rgba(26, 26, 31, 0.09);
-  border-bottom: 1px solid rgba(26, 26, 31, 0.09);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .intro-steps > div {
@@ -196,7 +196,7 @@
   align-items: center;
   padding: 0 20px;
   text-align: left;
-  border-right: 1px solid rgba(26, 26, 31, 0.09);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .intro-steps > div:last-child {
@@ -224,7 +224,7 @@
 
 .intro-steps small {
   margin-top: 2px;
-  color: rgba(26, 26, 31, 0.45);
+  color: rgba(255, 255, 255, 0.4);
   font-size: 10px;
 }
 
@@ -246,24 +246,24 @@
   color: #fff;
   font-weight: 800;
   cursor: pointer;
-  background: var(--black);
+  background: var(--signal);
   border: 0;
   border-radius: 10px;
-  box-shadow: 0 12px 28px rgba(26, 26, 31, 0.15);
+  box-shadow: 0 14px 34px rgba(232, 71, 46, 0.22);
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
 .game-start:hover {
-  background: #303038;
+  background: var(--signal-light);
   transform: translateY(-2px);
 }
 
 .game-start svg {
-  color: var(--signal-light);
+  color: #fff;
 }
 
 .intro-action-row > p {
-  color: rgba(26, 26, 31, 0.48);
+  color: rgba(255, 255, 255, 0.44);
   font-size: 11px;
 }
 
@@ -274,7 +274,7 @@
   align-items: center;
   justify-content: center;
   margin-top: 18px;
-  color: rgba(26, 26, 31, 0.42);
+  color: rgba(255, 255, 255, 0.35);
   font-size: 10px;
 }
 
@@ -2282,7 +2282,7 @@
   .intro-steps > div {
     padding: 11px 4px;
     border-right: 0;
-    border-bottom: 1px solid rgba(26, 26, 31, 0.07);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
   }
 
   .intro-steps > div:last-child {
