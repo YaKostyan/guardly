@@ -32,12 +32,14 @@ function FooterColumn({ title, links }) {
 }
 
 export default function Footer() {
+  const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
+
   return (
     <footer>
       <div className="footer-inner">
         <div className="footer-brand">
           <a className="footer-logo" href="#/" aria-label="Guardly">
-            <img src="/logo.png" alt="" />
+            <img src={logoUrl} alt="" />
             <span>Guardly</span>
           </a>
           <p>Тренажер цифрової безпеки для дітей, батьків і шкіл.</p>

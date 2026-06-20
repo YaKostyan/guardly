@@ -11,15 +11,28 @@ const navItems = [
 
 export default function Navbar({ activeRoute }) {
   const [open, setOpen] = useState(false);
+  const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
 
   useEffect(() => {
     setOpen(false);
   }, [activeRoute]);
 
+  useEffect(() => {
+    document.body.classList.toggle("nav-open", open);
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.classList.remove("nav-open");
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [open]);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${open ? "menu-open" : ""}`}>
       <a className="nav-logo" href="#/" aria-label="Guardly">
-        <img src="/logo.png" alt="" />
+        <img src={logoUrl} alt="" />
         <span>Guardly</span>
       </a>
 
@@ -28,12 +41,14 @@ export default function Navbar({ activeRoute }) {
         type="button"
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
+        aria-controls="site-navigation"
         aria-label={open ? "Закрити меню" : "Відкрити меню"}
       >
         {open ? <X size={20} /> : <Menu size={20} />}
       </button>
 
-      <div className={`nav-panel ${open ? "is-open" : ""}`}>
+      <div id="site-navigation" className={`nav-panel ${open ? "is-open" : ""}`}>
+        <div className="nav-mobile-title">Навігація</div>
         <ul className="nav-links">
           {navItems.map(([route, label]) => (
             <li key={route}>
@@ -46,7 +61,9 @@ export default function Navbar({ activeRoute }) {
         <Button href="#/demo" icon={Play} className="nav-cta">
           Почати безкоштовно
         </Button>
+        <p className="nav-mobile-note">Перша місія без реєстрації та картки.</p>
       </div>
+      {open && <button className="nav-backdrop" type="button" onClick={() => setOpen(false)} aria-label="Закрити меню" />}
     </nav>
   );
 }

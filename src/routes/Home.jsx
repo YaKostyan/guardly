@@ -11,6 +11,12 @@ const choices = [
   ["C", "Пересилаю посилання другу для перевірки", "wrong"],
 ];
 
+const choiceFeedback = {
+  A: "Терміновість — частина пастки. Спершу перевір джерело.",
+  B: "Правильно. Офіційний застосунок не залежить від посилання у повідомленні.",
+  C: "Не передавай ризик іншому. Перевір повідомлення через офіційний канал.",
+};
+
 export default function Home() {
   const [choice, setChoice] = useState(null);
 
@@ -79,6 +85,11 @@ export default function Home() {
                 </button>
               ))}
             </div>
+            {choice && (
+              <div className={`live-feedback ${choice === "B" ? "correct" : "wrong"}`} role="status">
+                {choiceFeedback[choice]}
+              </div>
+            )}
           </div>
           <div className="xp-widget">
             <div>

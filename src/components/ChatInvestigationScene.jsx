@@ -1,4 +1,4 @@
-import { Bell, Gamepad2, Gift, Headphones, HelpCircle, Inbox, Mic, MoreHorizontal, Plus, Search, Settings, Users } from "lucide-react";
+import { Bell, Gamepad2, Gift, Headphones, HelpCircle, Inbox, Mic, MoreHorizontal, MousePointerClick, Plus, Search, Settings, Users } from "lucide-react";
 import EvidenceHotspot from "./EvidenceHotspot.jsx";
 
 function hotspotState(hotspot, foundEvidence, clickedDecoys) {
@@ -60,6 +60,10 @@ export default function ChatInvestigationScene({ mission, foundEvidence, clicked
           <span className="live-pulse" />
           <div><strong>Завдання: знайди 3 сигнали пастки</strong><span>Клікай лише на деталі, які справді доводять ризик.</span></div>
           <b>{foundEvidence.length}/3</b>
+        </div>
+        <div className="mobile-tap-guide">
+          <MousePointerClick size={16} aria-hidden="true" />
+          Натискай прямо на підозрілі слова, ім'я або посилання.
         </div>
 
         <div className="discord-message-feed">

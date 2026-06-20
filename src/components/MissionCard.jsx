@@ -1,6 +1,8 @@
-import { Clock, Star } from "lucide-react";
+import { ArrowRight, Clock, LockKeyhole, Star } from "lucide-react";
 
 export default function MissionCard({ mission, compact = false }) {
+  const available = mission.id === "robux-scam";
+
   return (
     <article className={`mission-card ${compact ? "mission-card-compact" : ""}`}>
       <div className={`mission-icon ${mission.tone}`}>{mission.icon}</div>
@@ -22,6 +24,19 @@ export default function MissionCard({ mission, compact = false }) {
         {mission.platforms.map((platform) => (
           <span key={platform}>{platform}</span>
         ))}
+      </div>
+      <div className={`mission-card-action ${available ? "available" : "locked"}`}>
+        {available ? (
+          <a href="#/demo">
+            Розпочати місію
+            <ArrowRight size={15} aria-hidden="true" />
+          </a>
+        ) : (
+          <span>
+            <LockKeyhole size={14} aria-hidden="true" />
+            Незабаром
+          </span>
+        )}
       </div>
     </article>
   );

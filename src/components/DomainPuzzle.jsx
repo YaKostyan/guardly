@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowRight, Check, ChevronRight, CircleAlert, Lock, MoreVertical, RefreshCw, ShieldCheck, Star, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, ChevronRight, CircleAlert, Lock, MoreVertical, MousePointerClick, RefreshCw, ShieldCheck, Star, X } from "lucide-react";
 
 export default function DomainPuzzle({ puzzle, requiredCorrect, correctSelections, wrongSelections, completed, onSelect, onContinue }) {
   const options = new Map(puzzle.options.map((option) => [option.id, option]));
@@ -25,7 +25,7 @@ export default function DomainPuzzle({ puzzle, requiredCorrect, correctSelection
     <section className="domain-lab-scene">
       <div className="lab-instruction">
         <div className="lab-step-number">02</div>
-        <div><span>Безпечна лабораторія</span><h1>Що не так із цим сайтом?</h1><p>Познач 3 деталі, які доводять, що сторінка підроблена. Помилковий вибір забирає фокус.</p></div>
+        <div><span>Безпечна лабораторія</span><h1>Що не так із цим сайтом?</h1><p>Познач 3 деталі, які доводять, що сторінка підроблена. Помилковий вибір забирає фокус.</p><small className="mobile-puzzle-guide"><MousePointerClick size={14} /> Натискай на частини адреси та форми.</small></div>
         <strong>{correctSelections.length}/{requiredCorrect}</strong>
       </div>
 

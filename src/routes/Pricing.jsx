@@ -1,3 +1,4 @@
+import { ChevronDown } from "lucide-react";
 import Button from "../components/Button.jsx";
 import PricingCard from "../components/PricingCard.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
@@ -52,10 +53,13 @@ export default function Pricing() {
         <SectionHeader eyebrow="FAQ" title="Часті запитання" />
         <div className="faq-grid">
           {faqs.map(([question, answer]) => (
-            <article key={question}>
-              <h3>{question}</h3>
+            <details className="faq-item" key={question}>
+              <summary>
+                <span>{question}</span>
+                <ChevronDown size={18} aria-hidden="true" />
+              </summary>
               <p>{answer}</p>
-            </article>
+            </details>
           ))}
         </div>
       </section>

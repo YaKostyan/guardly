@@ -11,6 +11,11 @@ export default function EvidencePanel({ foundEvidence, requiredEvidence, mistake
       <p className="notebook-objective">
         {remaining ? `Знайди ще ${remaining} ${remaining === 1 ? "сигнал" : "сигнали"}` : "Доказів достатньо. Час перевірити сайт."}
       </p>
+      <p className="evidence-mobile-summary">
+        {foundEvidence.length
+          ? `Останній доказ: ${foundEvidence[foundEvidence.length - 1].title}`
+          : "Натискай на підозрілі слова, профіль або посилання у чаті."}
+      </p>
       <div className="evidence-slots">
         {Array.from({ length: requiredEvidence }, (_, index) => {
           const item = foundEvidence[index];
@@ -21,10 +26,10 @@ export default function EvidencePanel({ foundEvidence, requiredEvidence, mistake
           );
         })}
       </div>
-      <div className="notebook-status">
-        <span><ShieldAlert size={14} /> Помилки: {mistakes}</span>
+      {(mistakes > 0 || openedLink) && <div className="notebook-status">
+        {mistakes > 0 && <span><ShieldAlert size={14} /> Помилки: {mistakes}</span>}
         {openedLink && <span className="danger"><Link2 size={14} /> Посилання відкрито</span>}
-      </div>
+      </div>}
     </aside>
   );
 }
