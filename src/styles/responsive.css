@@ -721,6 +721,10 @@
     min-height: 48px;
   }
 
+  .investigation-sidebar {
+    display: contents;
+  }
+
   .discord-game-window {
     grid-row: 3;
     min-height: 570px;

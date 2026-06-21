@@ -289,18 +289,20 @@ export default function MissionGame({ mission }) {
             onOpenDangerLink={openDangerLink}
             onSkipTutorial={skipTutorial}
           />
-          <EvidencePanel
-            foundEvidence={foundEvidence}
-            requiredEvidence={mission.requiredEvidence}
-            mistakes={mistakes}
-            openedLink={openedLink}
-          />
-          {foundEvidenceIds.length >= mission.requiredEvidence && (
-            <button className="scene-next" type="button" onClick={() => { trackEvent("mission_phase", { mission_id: mission.id, phase: "domain" }); setPhase("domain"); }}>
-              Перевірити сайт у безпечному режимі
-              <ArrowRight size={18} aria-hidden="true" />
-            </button>
-          )}
+          <div className="investigation-sidebar">
+            <EvidencePanel
+              foundEvidence={foundEvidence}
+              requiredEvidence={mission.requiredEvidence}
+              mistakes={mistakes}
+              openedLink={openedLink}
+            />
+            {foundEvidenceIds.length >= mission.requiredEvidence && (
+              <button className="scene-next" type="button" onClick={() => { trackEvent("mission_phase", { mission_id: mission.id, phase: "domain" }); setPhase("domain"); }}>
+                Перевірити сайт у безпечному режимі
+                <ArrowRight size={18} aria-hidden="true" />
+              </button>
+            )}
+          </div>
         </div>
       )}
 

@@ -1,5 +1,5 @@
 import { ArrowRight, Play } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button.jsx";
 import MissionCard from "../components/MissionCard.jsx";
 import SectionHeader from "../components/SectionHeader.jsx";
@@ -20,6 +20,18 @@ const choiceFeedback = {
 
 export default function Home() {
   const [choice, setChoice] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(47);
+
+  useEffect(() => {
+    if (choice || timeLeft === 0) return undefined;
+    const timer = window.setInterval(() => {
+      setTimeLeft((current) => Math.max(0, current - 1));
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [choice, timeLeft]);
+
+  const timedOut = timeLeft === 0 && !choice;
+  const timerLabel = `0:${String(timeLeft).padStart(2, "0")}`;
 
   return (
     <>
@@ -65,7 +77,7 @@ export default function Home() {
           <div className="mission-live">
             <div className="mission-live-head">
               <span>Фішинг · Рівень 2</span>
-              <strong>0:47</strong>
+              <strong className={timeLeft <= 10 && !choice ? "urgent" : ""} aria-label={`Залишилось ${timeLeft} секунд`}>{timerLabel}</strong>
             </div>
             <p>
               Ти отримав повідомлення нібито від банку: «Підтверди картку за
@@ -86,9 +98,11 @@ export default function Home() {
                 </button>
               ))}
             </div>
-            {choice && (
+            {(choice || timedOut) && (
               <div className={`live-feedback ${choice === "B" ? "correct" : "wrong"}`} role="status">
-                {choiceFeedback[choice]}
+                {timedOut
+                  ? "Час вийшов, але поспішати не потрібно. Спокійно перевір варіанти та обери відповідь."
+                  : choiceFeedback[choice]}
               </div>
             )}
           </div>
