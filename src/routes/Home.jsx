@@ -62,20 +62,28 @@ export default function Home() {
               Переглянути місії
             </Button>
           </div>
-          <div className="hero-stats" aria-label="Статистика Guardly">
+          <div className="hero-stats impact-stats" aria-label="Звернення про кіберзлочини серед людей до 20 років у США">
             <div>
-              <strong>1</strong>
-              <span>демо-місія</span>
+              <strong>≈49</strong>
+              <span>звернень щодня</span>
             </div>
             <div>
-              <strong>3–4 хв</strong>
-              <span>на проходження</span>
+              <strong>17 993</strong>
+              <span>звернення за 2024 рік</span>
             </div>
             <div>
-              <strong>0 грн</strong>
-              <span>для старту</span>
+              <strong>$22,5 млн</strong>
+              <span>заявлених втрат</span>
             </div>
           </div>
+          <a
+            className="impact-stats-source"
+            href="https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            FBI IC3, США, 2024. Лише офіційно подані звернення; показник за день розраховано з річних даних.
+          </a>
         </div>
 
         <div className="hero-product" aria-label="Приклад місії Guardly">

@@ -51,6 +51,32 @@
   color: #b6f4cb;
 }
 
+.impact-stats {
+  gap: clamp(24px, 3vw, 42px);
+}
+
+.impact-stats > div {
+  max-width: 160px;
+}
+
+.impact-stats strong {
+  white-space: nowrap;
+}
+
+.impact-stats-source {
+  display: block;
+  max-width: 650px;
+  margin-top: 14px;
+  color: rgba(255, 255, 255, 0.28);
+  font-size: 9px;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.impact-stats-source:hover {
+  color: rgba(255, 255, 255, 0.52);
+}
+
 .about-hero {
   position: relative;
   display: grid;
@@ -432,6 +458,20 @@
   .hero-definition a {
     grid-column: 2;
     justify-self: start;
+  }
+
+  .impact-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 20px;
+  }
+
+  .impact-stats > div:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .impact-stats strong {
+    font-size: 26px;
   }
 
   .about-hero,
