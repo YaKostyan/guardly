@@ -1,137 +1,113 @@
 import {
-  ArrowRight,
-  Check,
+  CheckCircle2,
   Gamepad2,
   HeartHandshake,
   Play,
   School,
-  SearchCheck,
   ShieldCheck,
-  Sparkles,
 } from "lucide-react";
 import Button from "../components/Button.jsx";
 
-const offer = [
+const offers = [
   {
     number: "01",
-    icon: Gamepad2,
-    title: "Ігрові місії",
-    text: "Дитина потрапляє у знайому ситуацію з Roblox, Discord або повідомленнями та сама шукає ознаки пастки.",
+    label: "Дитині",
+    title: "Практика у форматі гри",
+    text: "Знайомі ситуації з Roblox, Discord і повідомлень стають короткими місіями, де потрібно шукати докази та приймати рішення.",
   },
   {
     number: "02",
-    icon: SearchCheck,
-    title: "Рішення з наслідками",
-    text: "Guardly оцінює не лише фінальну відповідь, а й уважність, помилки та докази, знайдені під час розслідування.",
+    label: "Батькам",
+    title: "Зрозумілий результат",
+    text: "Після гри видно, що дитина помітила, де помилилася та яке правило варто спокійно повторити разом.",
   },
   {
     number: "03",
-    icon: HeartHandshake,
-    title: "Розмова після гри",
-    text: "Після місії батьки отримують короткий чекліст, щоб закріпити правило без допиту, лекції або залякування.",
+    label: "Школам",
+    title: "Сценарій для обговорення",
+    text: "Коротку місію можна пройти на уроці та використати як основу для розмови про реальні цифрові ситуації.",
   },
 ];
 
 export default function About() {
+  const logoUrl = `${import.meta.env.BASE_URL}logo.png`;
+
   return (
     <>
-      <section className="story-hero">
-        <div className="story-hero-copy">
-          <p className="hero-badge"><span className="dot" />Про Guardly</p>
-          <h1>Безпека, яку дитина <em>не просто читає.</em> Вона її проживає.</h1>
-          <p>
-            Guardly перетворює інтернет-ризики на короткі місії. Дитина досліджує ситуацію, приймає рішення та бачить наслідок у безпечній симуляції.
-          </p>
-          <div className="hero-ctas">
-            <Button href="#/demo" icon={Play} analytics={{ name: "cta_click", params: { source: "about_hero", target: "demo" } }}>
-              Пройти демо-місію
-            </Button>
-            <button className="story-text-link" type="button" onClick={() => document.getElementById("story-offer")?.scrollIntoView({ behavior: "smooth" })}>
-              Що ми пропонуємо <ArrowRight size={16} />
-            </button>
-          </div>
-          <div className="story-trust">
-            <span><ShieldCheck size={16} />Без реєстрації</span>
-            <span><Sparkles size={16} />3-4 хвилини</span>
-            <span><Check size={16} />Без справжнього ризику</span>
-          </div>
+      <section className="company-hero">
+        <div className="company-lockup">
+          <img src={logoUrl} alt="" />
+          <div><strong>Guardly</strong><span>ВІДКРИТА БЕТА</span></div>
         </div>
-
-        <div className="story-product" aria-label="Приклад місії Guardly">
-          <header>
-            <span><ShieldCheck size={17} />GUARDLY</span>
-            <small>НАВЧАЛЬНА СИМУЛЯЦІЯ</small>
-          </header>
-          <div className="story-product-task">
-            <small>СИТУАЦІЯ 01</small>
-            <strong>Незнайомець обіцяє 5000 Robux</strong>
-          </div>
-          <div className="story-message">
-            <span>RD</span>
-            <p><strong>RbxDrop_247</strong>Тільки швидко. Увійди через Roblox, і подарунок твій.</p>
-          </div>
-          <div className="story-investigation">
-            <p><span>1</span><b>Знайди сигнали</b><small>Обіцянка, тиск, підозрілий домен</small></p>
-            <p><span>2</span><b>Перевір сайт</b><small>rbx-gift не дорівнює roblox.com</small></p>
-            <p><span>3</span><b>Обери дію</b><small>Заблокувати та поскаржитися</small></p>
-          </div>
-          <div className="story-product-footer"><span>Рішення змінює результат</span><b>+240 XP</b></div>
+        <h1>Місце, де дитина може помилитися <em>без справжніх наслідків.</em></h1>
+        <div className="company-hero-bottom">
+          <p>
+            Ми створюємо Guardly, щоб дитина тренувала безпечні рішення до зустрічі з реальною пасткою, а не після втрати акаунта.
+          </p>
+          <Button href="#/demo" icon={Play} analytics={{ name: "cta_click", params: { source: "about_hero", target: "demo" } }}>
+            Побачити, як це працює
+          </Button>
         </div>
       </section>
 
-      <section className="story-origin">
-        <div>
-          <p className="section-eyebrow">Чому ми це робимо</p>
-          <h2>Знати правило недостатньо, коли тебе кваплять.</h2>
-        </div>
-        <div>
+      <section className="company-story">
+        <div className="company-section-label">ЧОМУ GUARDLY</div>
+        <div className="company-story-copy">
+          <h2>Діти вже живуть онлайн. Навчання має відбуватися там само.</h2>
           <p>
-            Дитина може знати, що не можна ділитися паролем, і все одно розгубитися перед подарунком, знайомим логотипом або повідомленням «залишилося 5 хвилин».
+            Правило «не натискай на підозрілі посилання» звучить просто. Але воно перестає бути простим, коли незнайомець обіцяє подарунок, використовує знайомий логотип і квапить.
           </p>
           <p>
-            Тому Guardly тренує не запам'ятовування термінів, а момент рішення: зупинитися, помітити сигнал, перевірити та звернутися по допомогу.
+            Тому ми не починаємо з лекції. Ми показуємо ситуацію, даємо дитині дослідити її, зробити вибір і одразу зрозуміти наслідок.
           </p>
+          <blockquote>Не вчити боятися інтернету. Вчити зупинятися, перевіряти та звертатися по допомогу.</blockquote>
         </div>
       </section>
 
-      <section className="story-offer" id="story-offer">
+      <section className="company-offer">
         <header>
-          <p className="section-eyebrow">Що ми пропонуємо</p>
-          <h2>Одна коротка місія має навчити однієї корисної звички.</h2>
+          <div className="company-section-label">ЩО МИ ПРОПОНУЄМО</div>
+          <h2>Не ще один курс. Тренажер конкретних рішень.</h2>
         </header>
-        <div className="story-offer-list">
-          {offer.map(({ number, icon: Icon, title, text }) => (
-            <article key={number}>
-              <span>{number}</span>
-              <div><Icon size={23} /></div>
-              <h3>{title}</h3>
-              <p>{text}</p>
+        <div className="company-offer-rows">
+          {offers.map((item) => (
+            <article key={item.number}>
+              <span>{item.number}</span>
+              <small>{item.label}</small>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="story-audience">
+      <section className="company-values">
         <header>
-          <p className="section-eyebrow">Для кого</p>
-          <h2>Дитина грає. Дорослі допомагають закріпити досвід.</h2>
+          <div className="company-section-label">ПРИНЦИПИ</div>
+          <h2>Guardly має бути безпечним ще до початку місії.</h2>
         </header>
         <div>
-          <article><Gamepad2 size={21} /><span><strong>Дітям</strong>Знайомий формат, короткі рішення, XP та результат без довгих пояснень перед грою.</span></article>
-          <article><HeartHandshake size={21} /><span><strong>Батькам</strong>Зрозуміла тема для спокійної розмови та конкретні питання після місії.</span></article>
-          <article><School size={21} /><span><strong>Школам</strong>Сценарій, який можна пройти разом і використати як основу для обговорення на уроці.</span></article>
+          <article><Gamepad2 size={22} /><p><strong>Без залякування</strong>Ми пояснюємо ризик спокійно та показуємо, що робити далі.</p></article>
+          <article><HeartHandshake size={22} /><p><strong>Без сорому за помилку</strong>Неправильне рішення стає частиною навчання, а не приводом сварити дитину.</p></article>
+          <article><ShieldCheck size={22} /><p><strong>Без справжніх даних</strong>Демо не просить логін, пароль, оплату або доступ до акаунтів.</p></article>
         </div>
       </section>
 
-      <section className="story-beta">
+      <section className="company-now">
         <div>
-          <span>ВІДКРИТА БЕТА</span>
-          <h2>Починаємо з однієї місії, але робимо її по-справжньому.</h2>
-          <p>Зараз доступне завершене розслідування про фейкові Robux: чат, приховані докази, перевірка домену, наслідки та чекліст для батьків.</p>
+          <div className="company-section-label">ДЕ МИ ЗАРАЗ</div>
+          <h2>Ми не вдаємо, що Guardly уже великий.</h2>
+          <p>Це відкрита бета. Ми почали з однієї місії та доводимо її до зрозумілого продукту, перш ніж розширювати каталог.</p>
         </div>
-        <Button href="#/demo" variant="white" icon={Play} analytics={{ name: "cta_click", params: { source: "about_beta", target: "demo" } }}>
-          Побачити Guardly у дії
-        </Button>
+        <div className="company-now-list">
+          <p><CheckCircle2 size={18} /><span><strong>Вже працює</strong>Повна місія про фейкові Robux</span></p>
+          <p><CheckCircle2 size={18} /><span><strong>Вже працює</strong>Докази, перевірка домену та наслідки</span></p>
+          <p><CheckCircle2 size={18} /><span><strong>Вже працює</strong>Підсумок і чекліст для батьків</span></p>
+          <p><School size={18} /><span><strong>Перевіряємо попит</strong>Нові місії, сімейний і шкільний формати</span></p>
+          <Button href="#/demo" variant="dark" icon={Play} analytics={{ name: "cta_click", params: { source: "about_now", target: "demo" } }}>
+            Пройти першу місію
+          </Button>
+        </div>
       </section>
     </>
   );

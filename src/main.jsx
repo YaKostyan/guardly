@@ -6,6 +6,7 @@ import "./styles/globals.css";
 import "./styles/components.css";
 import "./styles/game.css";
 import "./styles/about.css";
+import "./styles/company.css";
 import "./styles/responsive.css";
 import "./styles/launch.css";
 

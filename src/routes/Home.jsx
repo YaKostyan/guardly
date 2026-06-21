@@ -62,28 +62,17 @@ export default function Home() {
               Переглянути місії
             </Button>
           </div>
-          <p className="impact-stats-heading">Діти та молодь до 20 років, які зіткнулися з кіберзлочинами та звернулися по допомогу у США:</p>
-          <div className="hero-stats impact-stats" aria-label="Звернення про кіберзлочини серед людей до 20 років у США">
-            <div>
-              <strong>≈49</strong>
-              <span>звернень від постраждалих щодня</span>
-            </div>
-            <div>
-              <strong>17 993</strong>
-              <span>звернення від людей до 20 років за рік</span>
-            </div>
-            <div>
-              <strong>$22,5 млн</strong>
-              <span>втрати цієї вікової групи</span>
-            </div>
+          <div className="global-risk-proof" aria-label="Світова статистика цифрових ризиків для дітей">
+            <strong>3 з 4</strong>
+            <p><b>дітей і підлітків у світі</b><span>зіткнулися щонайменше з одним кіберризиком протягом року</span></p>
           </div>
           <a
-            className="impact-stats-source"
-            href="https://www.ic3.gov/AnnualReport/Reports/2024_IC3Report.pdf"
+            className="global-risk-source"
+            href="https://www.dqinstitute.org/news-post/three-in-four-children-worldwide-experienced-at-least-one-cyber-risk-in-2022/"
             target="_blank"
             rel="noreferrer"
           >
-            FBI IC3, США, 2024. Лише офіційно подані звернення; показник за день розраховано з річних даних.
+            DQ Institute, Child Online Safety Index 2022: майже 330 000 учасників віком 8-18 років у 100 країнах.
           </a>
         </div>
 
