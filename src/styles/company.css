@@ -167,7 +167,6 @@
 
 .company-story h2,
 .company-offer h2,
-.company-values h2,
 .company-now h2 {
   font-family: var(--fh);
   letter-spacing: 0;
@@ -198,6 +197,48 @@
   font-weight: 700;
   line-height: 1.35;
   border-left: 3px solid #36b765;
+}
+
+.company-principles-inline {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-width: 980px;
+  margin-top: 44px;
+  border-top: 1px solid var(--n300);
+  border-bottom: 1px solid var(--n300);
+}
+
+.company-principles-inline > p {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 11px;
+  margin: 0;
+  padding: 19px 18px;
+  color: #6f6f7d;
+  font-size: 10px;
+  line-height: 1.55;
+  border-right: 1px solid var(--n300);
+}
+
+.company-principles-inline > p:first-child {
+  padding-left: 0;
+}
+
+.company-principles-inline > p:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.company-principles-inline svg {
+  color: #20934b;
+}
+
+.company-principles-inline strong {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--black);
+  font-family: var(--fh);
+  font-size: 11px;
 }
 
 .company-offer {
@@ -263,55 +304,14 @@
   line-height: 1.65;
 }
 
-.company-values {
-  display: grid;
-  grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(48px, 9vw, 130px);
-  padding: 94px max(64px, calc((100vw - 1280px) / 2));
-  color: #fff;
-  background: #1a1a1f;
-}
-
-.company-values h2 {
-  max-width: 620px;
-  margin-top: 14px;
-  font-size: clamp(38px, 4.7vw, 62px);
-  line-height: 1.04;
-}
-
-.company-values > div {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.company-values article {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 16px;
-  padding: 24px 0;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 12px;
-  line-height: 1.65;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.company-values article > svg {
-  color: var(--signal-light);
-}
-
-.company-values article strong {
-  display: block;
-  margin-bottom: 4px;
-  color: #fff;
-  font-family: var(--fh);
-  font-size: 15px;
-}
-
 .company-now {
   display: grid;
   grid-template-columns: minmax(300px, 0.9fr) minmax(360px, 1.1fr);
   gap: clamp(48px, 9vw, 130px);
   padding: 94px max(64px, calc((100vw - 1280px) / 2));
-  background: var(--off-white);
+  color: #fff;
+  background: #1a1a1f;
+  border-top: 3px solid var(--signal);
 }
 
 .company-now h2 {
@@ -323,13 +323,13 @@
 
 .company-now > div:first-child > p {
   max-width: 590px;
-  color: #6f6f7d;
+  color: rgba(255, 255, 255, 0.58);
   font-size: 14px;
   line-height: 1.7;
 }
 
 .company-now-list {
-  border-top: 1px solid var(--n300);
+  border-top: 1px solid rgba(255, 255, 255, 0.11);
 }
 
 .company-now-list > p {
@@ -338,10 +338,10 @@
   gap: 12px;
   margin: 0;
   padding: 17px 0;
-  color: #6f6f7d;
+  color: rgba(255, 255, 255, 0.58);
   font-size: 12px;
   line-height: 1.5;
-  border-bottom: 1px solid var(--n300);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.11);
 }
 
 .company-now-list > p svg {
@@ -355,7 +355,7 @@
 .company-now-list strong {
   display: block;
   margin-bottom: 2px;
-  color: var(--black);
+  color: #fff;
   font-size: 11px;
 }
 
@@ -367,7 +367,6 @@
   .company-hero-bottom,
   .company-story,
   .company-offer > header,
-  .company-values,
   .company-now {
     grid-template-columns: 1fr;
   }
@@ -400,7 +399,6 @@
   .company-hero,
   .company-story,
   .company-offer,
-  .company-values,
   .company-now {
     padding-right: 16px;
     padding-left: 16px;
@@ -435,7 +433,6 @@
 
   .company-story,
   .company-offer,
-  .company-values,
   .company-now {
     gap: 34px;
     padding-top: 58px;
@@ -444,7 +441,6 @@
 
   .company-story h2,
   .company-offer h2,
-  .company-values h2,
   .company-now h2 {
     font-size: 36px;
   }
@@ -457,6 +453,22 @@
     margin-top: 30px;
     padding-left: 16px;
     font-size: 20px;
+  }
+
+  .company-principles-inline {
+    grid-template-columns: 1fr;
+  }
+
+  .company-principles-inline > p,
+  .company-principles-inline > p:first-child,
+  .company-principles-inline > p:last-child {
+    padding: 16px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--n300);
+  }
+
+  .company-principles-inline > p:last-child {
+    border-bottom: 0;
   }
 
   .company-offer > header {

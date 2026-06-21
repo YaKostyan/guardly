@@ -61,6 +61,11 @@ export default function About() {
             Тому ми не починаємо з лекції. Ми показуємо ситуацію, даємо дитині дослідити її, зробити вибір і одразу зрозуміти наслідок.
           </p>
           <blockquote>Не вчити боятися інтернету. Вчити зупинятися, перевіряти та звертатися по допомогу.</blockquote>
+          <div className="company-principles-inline">
+            <p><Gamepad2 size={19} /><span><strong>Без залякування</strong>Спокійно пояснюємо ризик і наступну безпечну дію.</span></p>
+            <p><HeartHandshake size={19} /><span><strong>Без сорому</strong>Помилка стає частиною навчання, а не приводом сварити.</span></p>
+            <p><ShieldCheck size={19} /><span><strong>Без справжніх даних</strong>Не просимо логін, пароль, оплату або доступ до акаунтів.</span></p>
+          </div>
         </div>
       </section>
 
@@ -81,18 +86,6 @@ export default function About() {
         </div>
       </section>
 
-      <section className="company-values">
-        <header>
-          <div className="company-section-label">ПРИНЦИПИ</div>
-          <h2>Guardly має бути безпечним ще до початку місії.</h2>
-        </header>
-        <div>
-          <article><Gamepad2 size={22} /><p><strong>Без залякування</strong>Ми пояснюємо ризик спокійно та показуємо, що робити далі.</p></article>
-          <article><HeartHandshake size={22} /><p><strong>Без сорому за помилку</strong>Неправильне рішення стає частиною навчання, а не приводом сварити дитину.</p></article>
-          <article><ShieldCheck size={22} /><p><strong>Без справжніх даних</strong>Демо не просить логін, пароль, оплату або доступ до акаунтів.</p></article>
-        </div>
-      </section>
-
       <section className="company-now">
         <div>
           <div className="company-section-label">ДЕ МИ ЗАРАЗ</div>
@@ -104,7 +97,7 @@ export default function About() {
           <p><CheckCircle2 size={18} /><span><strong>Вже працює</strong>Докази, перевірка домену та наслідки</span></p>
           <p><CheckCircle2 size={18} /><span><strong>Вже працює</strong>Підсумок і чекліст для батьків</span></p>
           <p><School size={18} /><span><strong>Перевіряємо попит</strong>Нові місії, сімейний і шкільний формати</span></p>
-          <Button href="#/demo" variant="dark" icon={Play} analytics={{ name: "cta_click", params: { source: "about_now", target: "demo" } }}>
+          <Button href="#/demo" variant="white" icon={Play} analytics={{ name: "cta_click", params: { source: "about_now", target: "demo" } }}>
             Пройти першу місію
           </Button>
         </div>
