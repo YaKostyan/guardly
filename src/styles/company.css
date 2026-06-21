@@ -45,7 +45,7 @@
   display: block;
   max-width: 660px;
   margin-top: 10px;
-  color: rgba(255, 255, 255, 0.27);
+  color: rgba(255, 255, 255, 0.42);
   font-size: 9px;
   line-height: 1.5;
   text-decoration: none;
@@ -58,7 +58,7 @@
 .company-hero {
   position: relative;
   min-height: calc(100dvh - 62px);
-  padding: 76px 64px 64px;
+  padding: 76px max(64px, calc((100vw - 1420px) / 2)) 64px;
   overflow: hidden;
   color: #fff;
   background: var(--black);
@@ -136,7 +136,7 @@
 }
 
 .company-hero-bottom > p {
-  color: rgba(255, 255, 255, 0.54);
+  color: rgba(255, 255, 255, 0.66);
   font-size: 16px;
   line-height: 1.7;
 }
@@ -183,7 +183,7 @@
 .company-story-copy > p {
   max-width: 720px;
   margin-bottom: 18px;
-  color: var(--n500);
+  color: #6f6f7d;
   font-size: 16px;
   line-height: 1.75;
 }
@@ -258,7 +258,7 @@
 }
 
 .company-offer-rows p {
-  color: var(--n500);
+  color: #6f6f7d;
   font-size: 13px;
   line-height: 1.65;
 }
@@ -267,7 +267,7 @@
   display: grid;
   grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr);
   gap: clamp(48px, 9vw, 130px);
-  padding: 94px 64px;
+  padding: 94px max(64px, calc((100vw - 1280px) / 2));
   color: #fff;
   background: #1a1a1f;
 }
@@ -288,7 +288,7 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 16px;
   padding: 24px 0;
-  color: rgba(255, 255, 255, 0.43);
+  color: rgba(255, 255, 255, 0.6);
   font-size: 12px;
   line-height: 1.65;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -310,7 +310,7 @@
   display: grid;
   grid-template-columns: minmax(300px, 0.9fr) minmax(360px, 1.1fr);
   gap: clamp(48px, 9vw, 130px);
-  padding: 94px 64px;
+  padding: 94px max(64px, calc((100vw - 1280px) / 2));
   background: var(--off-white);
 }
 
@@ -323,7 +323,7 @@
 
 .company-now > div:first-child > p {
   max-width: 590px;
-  color: var(--n500);
+  color: #6f6f7d;
   font-size: 14px;
   line-height: 1.7;
 }
@@ -338,7 +338,7 @@
   gap: 12px;
   margin: 0;
   padding: 17px 0;
-  color: var(--n500);
+  color: #6f6f7d;
   font-size: 12px;
   line-height: 1.5;
   border-bottom: 1px solid var(--n300);
