@@ -1,4 +1,5 @@
 const productLinks = [
+  ["#/about", "Про Guardly"],
   ["#/missions", "Місії"],
   ["#/demo", "Демо-квест"],
   ["#/schools", "Для шкіл"],

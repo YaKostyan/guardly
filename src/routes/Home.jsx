@@ -1,4 +1,4 @@
-import { ArrowRight, Play } from "lucide-react";
+import { ArrowRight, Play, ShieldCheck } from "lucide-react";
 import { useEffect, useState } from "react";
 import Button from "../components/Button.jsx";
 import MissionCard from "../components/MissionCard.jsx";
@@ -49,6 +49,11 @@ export default function Home() {
             крадіжка акаунтів у Roblox, Discord, Telegram і TikTok — у форматі
             коротких квестів.
           </p>
+          <div className="hero-definition">
+            <ShieldCheck size={22} aria-hidden="true" />
+            <p><strong>Guardly - це тренажер безпечних рішень.</strong><span>Дитина розслідує знайому ситуацію, обирає дію та одразу бачить наслідок.</span></p>
+            <a href="#/about">Що ми пропонуємо <ArrowRight size={15} /></a>
+          </div>
           <div className="hero-ctas">
             <Button href="#/demo" icon={Play} analytics={{ name: "cta_click", params: { source: "home_hero", target: "demo" } }}>
               Почати безкоштовно

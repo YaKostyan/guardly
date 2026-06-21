@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Button from "./Button.jsx";
 
 const navItems = [
+  ["/about", "Про Guardly"],
   ["/missions", "Місії"],
   ["/parents", "Батькам"],
   ["/schools", "Школам"],

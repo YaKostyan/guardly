@@ -8,6 +8,7 @@ import Schools from "./routes/Schools.jsx";
 import Pricing from "./routes/Pricing.jsx";
 import DemoQuest from "./routes/DemoQuest.jsx";
 import Privacy from "./routes/Privacy.jsx";
+import About from "./routes/About.jsx";
 import AnalyticsConsent from "./components/AnalyticsConsent.jsx";
 import { bootstrapAnalytics, trackPageView } from "./lib/analytics.js";
 
@@ -19,6 +20,7 @@ const routes = {
   "/pricing": Pricing,
   "/demo": DemoQuest,
   "/privacy": Privacy,
+  "/about": About,
 };
 
 const routeMeta = {
@@ -29,6 +31,7 @@ const routeMeta = {
   "/pricing": ["Ціни Guardly", "Поточний безкоштовний демо-квест і попередні плани розвитку Guardly."],
   "/demo": ["Безкоштовні Robux чи пастка? — Guardly", "Безпечна інтерактивна місія про фейковий подарунок Robux."],
   "/privacy": ["Приватність Guardly", "Як Guardly працює з аналітикою та даними у відкритій бета-версії."],
+  "/about": ["Про Guardly", "Що пропонує Guardly дітям, батькам і школам: практичні ігрові місії з цифрової безпеки."],
 };
 
 function readRoute() {
