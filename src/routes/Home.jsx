@@ -62,18 +62,19 @@ export default function Home() {
               Переглянути місії
             </Button>
           </div>
+          <p className="impact-stats-heading">Діти та молодь до 20 років, які зіткнулися з кіберзлочинами та звернулися по допомогу у США:</p>
           <div className="hero-stats impact-stats" aria-label="Звернення про кіберзлочини серед людей до 20 років у США">
             <div>
               <strong>≈49</strong>
-              <span>звернень щодня</span>
+              <span>звернень від постраждалих щодня</span>
             </div>
             <div>
               <strong>17 993</strong>
-              <span>звернення за 2024 рік</span>
+              <span>звернення від людей до 20 років за рік</span>
             </div>
             <div>
               <strong>$22,5 млн</strong>
-              <span>заявлених втрат</span>
+              <span>втрати цієї вікової групи</span>
             </div>
           </div>
           <a
