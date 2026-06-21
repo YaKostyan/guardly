@@ -13,7 +13,6 @@ const audienceLinks = [
 
 const trustLinks = [
   ["#/privacy", "Приватність"],
-  ["https://github.com/YaKostyan/guardly", "GitHub"],
 ];
 
 function FooterColumn({ title, links }) {
