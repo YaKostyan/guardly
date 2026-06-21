@@ -23,15 +23,12 @@ export function initAnalytics() {
     window.dataLayer.push(arguments);
   };
 
-  window.gtag("consent", "default", {
-    ad_storage: "denied",
-    ad_user_data: "denied",
-    ad_personalization: "denied",
-    analytics_storage: "denied",
-  });
-  window.gtag("consent", "update", { analytics_storage: "granted" });
   window.gtag("js", new Date());
-  window.gtag("config", measurementId, { send_page_view: false });
+  window.gtag("config", measurementId, {
+    send_page_view: false,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false,
+  });
 
   const script = document.createElement("script");
   script.async = true;
